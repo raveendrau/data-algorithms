@@ -1,29 +1,53 @@
 
 public class LinkStrand implements IDnaStrand {
-
-	public LinkStrand() {
-		// TODO Auto-generated constructor stub
+	private class Node {
+		String myValue;
+		Node myNext;
+		
+		Node(String value, Node next) {
+			myValue = value;
+			myNext = next;
+		}
 	}
-
-	@Override
+	
+	private String myInfo;
+	private int myAppends;
+	private Node myHead;
+	private long size;
+	
+	/**
+	 * Create a strand representing an empty DNA strand.
+	 */
+	public LinkStrand() {
+		this("");
+	}
+	
+	/**
+	 * Create a strand representing s.
+	 */
+	public LinkStrand(String s) {
+		myInfo = new String(s);
+		Node current = myHead;
+		while(current.myNext != null) {
+			current = current.myNext;
+		}
+		current.myNext = new Node(myInfo, null);
+	}
+	
 	public IDnaStrand cutAndSplice(String enzyme, String splicee) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public long size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
-	@Override
 	public void initializeFrom(String source) {
-		// TODO Auto-generated method stub
-
+		myHead = new Node(source, myHead);
+		size = source.length();
 	}
 
-	@Override
 	public String strandInfo() {
 		// TODO Auto-generated method stub
 		return null;
