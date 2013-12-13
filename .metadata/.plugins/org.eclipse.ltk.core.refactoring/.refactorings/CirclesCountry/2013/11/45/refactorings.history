@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy element &apos;CirclesCountry.java&apos; to &apos;APTs/src/(default package)&apos;&#x0A;- Original project: &apos;CirclesCountry&apos;&#x0A;- Destination element: &apos;APTs/src/(default package)&apos;&#x0A;- Original element: &apos;CirclesCountry.java&apos;" description="Copy compilation unit" destination="=APTs/src&lt;" element1="/src&lt;{CirclesCountry.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1383753476166" units="1" version="1.0"/>
-</session>

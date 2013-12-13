@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy element &apos;IsomorphicWords.java&apos; to &apos;SoccerLeagues.java&apos;&#x0A;- Original project: &apos;IsomorphicWords&apos;&#x0A;- Destination element: &apos;SoccerLeagues.java&apos;&#x0A;- Original element: &apos;IsomorphicWords.java&apos;" description="Copy compilation unit" destination="=APTs/src&lt;{SoccerLeagues.java" element1="/src&lt;{IsomorphicWords.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1383753544412" units="1" version="1.0"/>
-</session>
