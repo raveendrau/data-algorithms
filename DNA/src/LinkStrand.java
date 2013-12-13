@@ -1,31 +1,31 @@
 
 public class LinkStrand implements IDnaStrand {
-	private class Node {
-		String myValue;
-		Node myNext;
-		
-		Node(String value, Node next) {
-			myValue = value;
-			myNext = next;
-		}
-	}
-	
-	private String myInfo;
+		 
+	// declaring instance variables
+	private String myInfo; 
 	private int myAppends; // track number of appends
 	private Node myHead, myTail; // track first and last nodes
 	private long size; // store the size of DNA strand 
 	
 	/**
-	 * Create a strand representing an empty DNA strand.
+	 * Create a strand representing an empty DNA strand, length of 0.
+	 * @param none
+	 * @return none
 	 */
 	public LinkStrand() {
+    	// Syntactic trick: calls the other constructor (the one that
+    	// takes a String) with an empty String.
 		this("");
 	}
 	
 	/**
-	 * Create a strand representing s.
-	 */
+     * Create a strand representing s. No error checking is done to 
+     * see if s represents valid genomic/DNA data.
+     * @param s is the source of cgat data for this strand
+     * @return none
+     */
 	public LinkStrand(String s) {
+		myHead = new Node(s);
 		Node current = myHead;
 		while(current.myNext != null) {
 			current = current.myNext;
