@@ -83,7 +83,7 @@ public class LinkStrand implements IDnaStrand {
 		else {
 			return append(dna.toString());
 		}
-	}s
+	}
 
     /**
      * Simply append a strand of dna data to this strand. No error 
@@ -99,10 +99,24 @@ public class LinkStrand implements IDnaStrand {
 		return this;
 	}
 
-	@Override
+	
 	public IDnaStrand reverse() {
-		// TODO Auto-generated method stub
-		return null;
+		LinkStrand clone = this;
+		StringBuilder sb = new StringBuilder();
+		sb.append(myHead.myValue);
+		sb.reverse();
+		LinkStrand ls = new LinkStrand(sb.toString());
+		clone.myHead = clone.myHead.myNext;
+		while (ls.size() < size) {
+			Node foo = clone.myHead;
+			clone.myHead = clone.myHead.myNext;
+			foo.myNext = null;
+			sb = new StringBuilder();
+			sb.append(foo.myValue);
+			sb.reverse();
+			ls.append(sb.toString());
+		}
+		return ls;
 	}
 
 	public String getStats() {
