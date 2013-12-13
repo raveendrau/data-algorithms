@@ -122,7 +122,6 @@ public class LinkStrand implements IDnaStrand {
 		while (ls.size() < size) {
 			Node foo = clone.myHead;
 			clone.myHead = clone.myHead.myNext;
-			foo.myNext = null;
 			sb = new StringBuilder();
 			sb.append(foo.myValue);
 			sb.reverse();
