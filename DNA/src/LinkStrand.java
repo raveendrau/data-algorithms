@@ -11,9 +11,9 @@ public class LinkStrand implements IDnaStrand {
 	}
 	
 	private String myInfo;
-	private int myAppends;
-	private Node myHead;
-	private long size;
+	private int myAppends; // track number of appends
+	private Node myHead, myTail; // track first and last nodes
+	private long size; // store the size of DNA strand 
 	
 	/**
 	 * Create a strand representing an empty DNA strand.
@@ -26,12 +26,12 @@ public class LinkStrand implements IDnaStrand {
 	 * Create a strand representing s.
 	 */
 	public LinkStrand(String s) {
-		myInfo = new String(s);
 		Node current = myHead;
 		while(current.myNext != null) {
 			current = current.myNext;
 		}
-		current.myNext = new Node(myInfo, null);
+		current.myNext = new Node(s, null);
+		size = size + s.length();
 	}
 	
 	public IDnaStrand cutAndSplice(String enzyme, String splicee) {
@@ -39,6 +39,9 @@ public class LinkStrand implements IDnaStrand {
 		return null;
 	}
 
+    /**
+     * Returns the number of nucleotides/base-pairs in this strand.
+     */
 	public long size() {
 		return size;
 	}
@@ -49,13 +52,14 @@ public class LinkStrand implements IDnaStrand {
 	}
 
 	public String strandInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getClass().getName();
 	}
 
-	@Override
 	public IDnaStrand append(IDnaStrand dna) {
-		// TODO Auto-generated method stub
+		if (dna instanceof LinkStrand) {
+			LinkStrand ls = (LinkStrand) dna;
+		
+		}
 		return null;
 	}
 

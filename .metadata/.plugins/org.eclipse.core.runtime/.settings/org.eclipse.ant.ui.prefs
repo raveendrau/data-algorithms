@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+org.eclipse.ant.ui.commentsColor=147,161,161
+org.eclipse.ant.ui.constantStringsColor=220,50,47
+org.eclipse.ant.ui.dtdColor=133,153,0
+org.eclipse.ant.ui.processingInstructionsColor=88,110,117
+org.eclipse.ant.ui.tagsColor=133,153,0
+org.eclipse.ant.ui.textColor=88,110,117
+problem_classpath=warning
+problem_imports=warning
+problem_properties=ignore
+problem_security=warning
+problem_tasks=ignore
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;randomFunction2&apos; to &apos;References&apos;&#x0A;- Original project: &apos;Sep09&apos;&#x0A;- Original element: &apos;randomFunction2&apos;&#x0A;- Renamed element: &apos;References&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;randomFunction2&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{randomFunction2.java[randomFunction2" matchStrategy="1" name="References" qualified="false" references="true" similarDeclarations="false" stamp="1383766321299" textual="false" version="1.0"/>
+</session>

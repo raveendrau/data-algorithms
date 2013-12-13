@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Dirsort.java&apos; to &apos;Anonymous.java&apos;&#x0A;- Original project: &apos;DirSort&apos;&#x0A;- Destination element: &apos;Anonymous.java&apos;&#x0A;- Original element: &apos;Dirsort.java&apos;" description="Copy compilation unit" destination="=APTs/src&lt;{Anonymous.java" element1="/src&lt;{Dirsort.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1384047442612" units="1" version="1.0"/>
+</session>
