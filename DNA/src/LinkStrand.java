@@ -1,16 +1,24 @@
 
 public class LinkStrand implements IDnaStrand {
-		 
+	
+	// Node class for list
+	public class Node {
+		String myValue;
+		Node myNext;
+		Node(String value) {
+			myValue = value;
+			myNext = null;
+		}
+	}
+	 
 	// declaring instance variables
-	private String myInfo; 
+	private StringBuilder myInfo; 
 	private int myAppends; // track number of appends
 	private Node myHead, myTail; // track first and last nodes
 	private long size; // store the size of DNA strand 
 	
 	/**
 	 * Create a strand representing an empty DNA strand, length of 0.
-	 * @param none
-	 * @return none
 	 */
 	public LinkStrand() {
     	// Syntactic trick: calls the other constructor (the one that
@@ -22,16 +30,11 @@ public class LinkStrand implements IDnaStrand {
      * Create a strand representing s. No error checking is done to 
      * see if s represents valid genomic/DNA data.
      * @param s is the source of cgat data for this strand
-     * @return none
      */
 	public LinkStrand(String s) {
 		myHead = new Node(s);
-		Node current = myHead;
-		while(current.myNext != null) {
-			current = current.myNext;
-		}
-		current.myNext = new Node(s, null);
-		size = size + s.length();
+		myTail = myHead;
+		size = s.length();
 	}
 	
 	public IDnaStrand cutAndSplice(String enzyme, String splicee) {
@@ -46,8 +49,14 @@ public class LinkStrand implements IDnaStrand {
 		return size;
 	}
 
+    /**
+     * Initialize this strand so that it represents the value of source.
+     * No error checking is performed.
+     * @param source is the source of this enzyme
+     */
 	public void initializeFrom(String source) {
-		myHead = new Node(source, myHead);
+		myHead = new Node(source);
+		myTail = myHead;
 		size = source.length();
 	}
 
@@ -55,18 +64,39 @@ public class LinkStrand implements IDnaStrand {
 		return this.getClass().getName();
 	}
 
+    /**
+     * Append a strand of DNA to this strand. If the strand being appended
+     * is represented by a SimpleStrand object then an efficient append is
+     * performed, otherwise the append is inefficient (even though it 
+     * doesn't have to be).
+     * @param dna is the strand being appended
+     */
 	public IDnaStrand append(IDnaStrand dna) {
 		if (dna instanceof LinkStrand) {
-			LinkStrand ls = (LinkStrand) dna;
-		
+			LinkStrand myStrand = (LinkStrand) dna;
+			myTail.myNext = myStrand.myHead;
+			myTail = myStrand.myTail;
+			size = size + myStrand.size();
+			myAppends++;
+			return this;
 		}
-		return null;
-	}
+		else {
+			return append(dna.toString());
+		}
+	}s
 
-	@Override
+    /**
+     * Simply append a strand of dna data to this strand. No error 
+     * checking is done. 
+     * @param dna is the String appended to this strand
+     */
 	public IDnaStrand append(String dna) {
-		// TODO Auto-generated method stub
-		return null;
+		Node myNode = new Node(dna);
+		myTail.myNext = myNode;
+		myTail = myNode;
+		size += dna.length();
+		myAppends++;
+		return this;
 	}
 
 	@Override
@@ -75,10 +105,8 @@ public class LinkStrand implements IDnaStrand {
 		return null;
 	}
 
-	@Override
 	public String getStats() {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("# append calls = %d",myAppends);
 	}
 
 }
