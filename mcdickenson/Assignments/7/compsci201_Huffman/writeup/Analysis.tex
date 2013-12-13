@@ -1,0 +1,213 @@
+\documentclass[12pt]{article}
+\usepackage{url,graphicx,tabularx,array}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% PREAMBLE %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% -------------------- defaults -------------------- %
+% load lots o' packages
+
+% layout control
+\usepackage[paper=a4paper,left=25mm,right=25mm,top=20mm,bottom=25mm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\setlength{\parskip}{.5em}
+\usepackage{rotating}
+\usepackage{setspace}
+
+% math typesetting
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\usepackage{verbatim}
+\usepackage{listings}
+
+% restricts float objects to be inserted before end of section
+% creates float barriers
+\usepackage[section]{placeins}
+
+% tables
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{longtable}
+
+\usepackage[%
+decimalsymbol=.,
+digitsep=fullstop
+]{siunitx}
+
+% to adapt caption style
+\usepackage[font={small},labelfont=bf]{caption}
+
+% references
+\usepackage[longnamesfirst]{natbib}
+\bibpunct{(}{)}{;}{a}{}{,}
+
+% footnotes at bottom
+\usepackage[bottom]{footmisc}
+
+% to change enumeration symbols begin{enumerate}[(a)]
+\usepackage{enumerate}
+
+% to make enumerations and itemizations within paragraphs or
+% lines. f.i. begin{inparaenum} for (a) is (b) and (c)
+\usepackage{paralist}
+
+% to colorize links in document. See color specification below
+\usepackage[pdftex,hyperref,x11names]{xcolor}
+
+% for multiple references and insertion of the word "figure" or "table"
+% \usepackage{cleveref}
+
+% load the hyper-references package and set document info
+\usepackage[pdftex]{hyperref}
+
+% graphics stuff
+\usepackage{coordsys}
+\usepackage{tikz}
+\usepackage{subfig}
+\usepackage{graphicx}
+\usepackage[space]{grffile} % allows us to specify directories that have spaces
+\usepackage{placeins} % prevents floats & moving past a \FloatBarrier
+%\usepackage{tikz}
+% \usepackage{pgfplots}
+
+% define clickable links and their colors
+\hypersetup{%
+unicode=false,          % non-Latin characters in Acrobat's bookmarks
+pdftoolbar=true,        % show Acrobat's toolbar?
+pdfmenubar=true,        % show Acrobat's menu?
+pdffitwindow=false,     % window fit to page when opened
+pdfstartview={FitH},    % fits the width of the page to the window
+pdfnewwindow=true,%
+pagebackref=false,%
+pdfauthor={Matt Dickenson},%
+pdftitle={Title},%
+colorlinks,%
+citecolor=black,%
+filecolor=black,%
+linkcolor=black,%
+urlcolor=RoyalBlue4}
+
+\lstset{
+    basicstyle=\ttfamily,
+    upquote=true,
+    breaklines=true,
+    tabsize=2,
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookrightarrow}},
+    breakatwhitespace=true,
+    numbers=left,
+    showstringspaces=false
+}
+
+% -------------------------------------------------- %
+
+
+
+%-- Set options
+\setlength{\parskip}{1ex} %--skip lines between paragraphs
+\setlength{\parindent}{0pt} %--don't indent paragraphs
+\newcommand{\inputTikZ}[2]{%  
+     \scalebox{#1}{\input{#2}}  
+}
+
+
+%-- Commands for header
+\renewcommand{\title}[1]{\textbf{#1}\\}
+\renewcommand{\line}{\begin{tabularx}{\textwidth}{X>{\raggedleft}X}\hline\\\end{tabularx}\\[-0.5cm]}
+\newcommand{\leftright}[2]{\begin{tabularx}{\textwidth}{X>{\raggedleft}X}#1%
+& #2\\\end{tabularx}\\[-0.5cm]}
+%\linespread{2} %-- Uncomment for Double Space
+\begin{document}
+
+% ----------------------TITLE----------------------- %
+\title{CS 201 - HW 7 Analysis}
+\line
+\leftright{\today}{Matt Dickenson} %-- left and right positions in the header
+\setlength{\parindent}{16pt}
+
+\section{SimpleHuffProcessor}
+
+Pre- and post-compression file sizes for the Calgary corpus using my \texttt{SimpleHuffProcessor} are displayed in Table \ref{simple-calgary}. The overall compression rate is 63.221 percent.
+
+\begin{table}[h!]
+\centering
+\caption{SimpleHuffProcessor on Calgary Corpus}
+\label{simple-calgary}
+\begin{tabular}{lrrr}
+\toprule
+Filename & Start size & End size & Runtime \\
+\midrule
+bib &	 111,261 & 73,793 & 0.339 \\
+book1 &	 768,771 & 243,186 & 0.960 \\
+book2 &	 610,856 & 369,333 & 1.301 \\
+geo &	 102,400 & 1,043 & 0.009 \\
+news &	 377,109 & 247,426 & 0.883 \\
+obj1 &	 21,504 & 1,033 & 0.056 \\
+obj2 &	 246,814 & 1,032 & 0.008 \\
+paper1 &	 53,161 & 34,369 & 0.136 \\
+paper2 &	 82,199 & 48,647 & 0.176 \\
+paper3 &	 46,526 & 28,307 & 0.127 \\
+paper4 &	 13,286 & 8,892 & 0.036 \\
+paper5 &	 11,954 & 8,463 & 0.033 \\
+paper6 &	 38,105 & 25,055 & 0.094 \\
+pic &	 513,216 & 1,032 & 0.033 \\
+progc &	 39,611 & 26,946 & 0.124 \\
+progl &	 71,646 & 44,015 & 0.171 \\
+progp &	 49,379 & 31,246 & 0.164 \\
+trans &	 93,695 & 2,047 & 0.020 \\
+\midrule
+Total & 3,251,493 & 1,195,865 & 4.670 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\section{TreeHuffProcessor}
+
+Pre- and post-compression file sizes for the Calgary corpus using my \texttt{TreeHuffProcessor} are displayed in Table \ref{tree-calgary}. The overall compression rate is 63.578 percent--slightly higher than for \texttt{SimpleHuffProcessor}. The total running time of 4.335 for this corpus is also shorter than the simple processor's 4.670 seconds. Given that this method is both faster and more memory efficient, I would choose it over the simpler processor. 
+
+\begin{table}[h!]
+\centering
+\caption{TreeHuffProcessor on Calgary Corpus}
+\label{tree-calgary}
+\begin{tabular}{lrrr}
+\toprule
+Filename & Start size & End size & Runtime \\
+\midrule
+bib & 111,261 & 73,210 & 0.327 \\
+book1 & 768,771 & 242,592 & 0.918 \\
+book2 & 610,856 & 368,830 & 1.248 \\
+geo & 102,400 & 88 & 0.001 \\
+news & 377,109 & 246,934 & 0.849 \\
+obj1 & 21,504 & 25 & 0.001 \\
+obj2 & 246,814 & 14 & 0.001 \\
+paper1 & 53,161 & 33,861 & 0.125 \\
+paper2 & 82,199 & 48,118 & 0.202 \\
+paper3 & 46,526 & 27,740 & 0.099 \\
+paper4 & 13,286 & 8,303 & 0.032 \\
+paper5 & 11,954 & 7,934 & 0.030 \\
+paper6 & 38,105 & 24,537 & 0.094 \\
+pic & 513,216 & 14 & 0.003 \\
+progc & 39,611 & 26,422 & 0.130 \\
+progl & 71,646 & 43,464 & 0.157 \\
+progp & 49,379 & 30,706 & 0.110 \\
+trans & 93,695 & 1,458 & 0.008 \\
+\midrule
+Total & 3,251,493 & 1,184,250 & 4.335 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Multiple Compressions}
+
+It is possible to reduce file sizes even further by compressing them with the Huffman coding multiple times. However, the file size reduction seems to stop after the second Huffman coding iteration. For example, the original file size of the Calgary corpus is 3,251,493 bytes. After one iteration, this is reduced by about 63.6 percent to 1,184,250 bytes. The second iteration reduces this further to 558 bytes. However, a third iteration leaves the total file size of the entire corpus at 558 bytes--no further reduction is possible. (Although I was initially inclined to graph these numbers, the widely different orders of magnitude made this infeasible.)\footnote{The comparisons in this section are based on the \texttt{SimpleHuffProcessor}. Using the \texttt{TreeHuffProcessor} would likely make the overall compression ratios even better.}
+
+To see why this is the case, consider a file that is intentionally designed to be compressed. The most basic example of this is a file with repetitions of the same character over and over. One compression of this file would result in a much smaller file with only the magic number, character mapping and a single node. A second compression would be about the same size, since it would still have to contain the magic number and character mapping--after this no more compression is possible.
+
+
+\end{document}
