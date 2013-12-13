@@ -49,6 +49,18 @@ public class LinkStrand implements IDnaStrand {
 		return size;
 	}
 
+	public String toString() {
+		myInfo = new StringBuilder();
+		Node myNode = myHead;
+		myInfo.append(myNode.myValue);
+		while (myNode.myNext != null) {
+			myNode = myNode.myNext;
+			myInfo.append(myNode.myValue);
+		}
+		String foo = myInfo.toString();
+		return foo;
+	}
+	
     /**
      * Initialize this strand so that it represents the value of source.
      * No error checking is performed.
