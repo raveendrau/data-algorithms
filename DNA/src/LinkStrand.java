@@ -37,9 +37,59 @@ public class LinkStrand implements IDnaStrand {
 		size = s.length();
 	}
 	
+	/**
+	 * The code below finds all occurrences of a restriction enzyme 
+	 * like ÒgaattcÓ and splices in a new strand of DNA.
+	 * The characters representing the enzyme are replaced by splicee.  
+	 * @param splicee spliced-in replaces the enzyme. 
+	 * @param enzyme is removed each time it occurs. 
+	 * @return the new recombinant strand.  
+	 */
 	public IDnaStrand cutAndSplice(String enzyme, String splicee) {
-		// TODO Auto-generated method stub
-		return null;
+		if (myHead.myNext != null){
+	        throw new RuntimeException("link strand has more than one node"); 
+	    }
+		int pos = 0;
+		int start = 0;
+		String search = this.toString();
+		boolean first = true;
+		LinkStrand ret = null;
+        /*
+         * The next line is very syntax-dense. .indexOf looks for the 
+         * first index at which enzyme occurs, starting at pos. Saying 
+         * pos = ... assigns the result of that operation to the pos
+         * variable; the value of pos is then compared against zero.
+         * 
+         * .indexOf returns -1 if enzyme can't be found. Therefore, this
+         * line is:
+         * 
+         * "While I can find enzyme, assign the location where it occurs
+         * to pos, and then execute the body of the loop."
+         */
+        while ((pos = search.indexOf(enzyme, pos)) >= 0) {
+            if (first){
+                ret = new LinkStrand(search.substring(start, pos));
+                first = false;
+            }
+            else {
+                 ret.append(search.substring(start, pos));
+            }
+            start = pos + enzyme.length();
+            ret.append(splicee);
+            pos++;
+        }
+        
+        if (start < search.length()) {
+        	// NOTE: This is an important special case! If the enzyme
+        	// is never found, return an empty String.
+        	if (ret == null){
+        		ret = new LinkStrand("");
+        	}
+        	else {
+        		ret.append(search.substring(start));
+        	}
+        }
+        return ret;
 	}
 
     /**
