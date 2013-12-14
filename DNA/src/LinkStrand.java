@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class LinkStrand implements IDnaStrand {
 	
@@ -163,19 +166,32 @@ public class LinkStrand implements IDnaStrand {
 
 	
 	public IDnaStrand reverse() {
-		LinkStrand clone = this;
+		Map<String, String> map = new HashMap<String,String>();
+		LinkStrand c = this;
 		StringBuilder sb = new StringBuilder();
-		sb.append(myHead.myValue);
+		String s = myHead.myValue;
+		sb.append(s);
 		sb.reverse();
-		LinkStrand ls = new LinkStrand(sb.toString());
-		clone.myHead = clone.myHead.myNext;
+		String ss = sb.toString();
+		map.put(s, ss);
+		LinkStrand ls = new LinkStrand(ss);
+		c.myHead = c.myHead.myNext;
 		while (ls.size() < size) {
-			Node foo = clone.myHead;
-			clone.myHead = clone.myHead.myNext;
+			c.myHead = c.myHead.myNext;
 			sb = new StringBuilder();
-			sb.append(foo.myValue);
-			sb.reverse();
-			ls.append(sb.toString());
+			String foo = c.myHead.myValue;
+			
+			if (map.containsKey(foo)) {
+				String bar = map.get(foo);
+				ls.append(bar);
+			}
+			else {
+				sb.append(foo);
+				sb.reverse();
+				String bar = sb.toString();
+				map.put(foo,bar);
+				ls.append(bar);
+			}
 		}
 		return ls;
 	}
