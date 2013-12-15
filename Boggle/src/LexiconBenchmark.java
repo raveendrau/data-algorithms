@@ -8,13 +8,15 @@ import javax.swing.ProgressMonitorInputStream;
 
 public class LexiconBenchmark {
 
-    private static String SMALL_LEXICON = "/bogwords.txt";
+    @SuppressWarnings("unused")
+	private static String SMALL_LEXICON = "/bogwords.txt";
     private static String LARGE_LEXICON = "/ospd3.txt";
     private static int PERCENTAGE = 3;
     private static Random ourRandom = new Random(1234567);
     private static ArrayList<String> myList;
     
-    public static String iterate(ILexicon lex){
+    @SuppressWarnings("unused")
+	public static String iterate(ILexicon lex){
         double start = System.currentTimeMillis();
         int count = 0;
         for(String s : lex){

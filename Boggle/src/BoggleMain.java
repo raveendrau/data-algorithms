@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.io.InputStream;
 
 
@@ -10,7 +9,8 @@ import java.io.InputStream;
 
 public class BoggleMain {
 
-    public static void main(String[] args) {
+    @SuppressWarnings("unused")
+	public static void main(String[] args) {
         
         ILexicon lexicon = new SimpleLexicon();
         IWordOnBoardFinder finder = new BadWordOnBoardFinder();

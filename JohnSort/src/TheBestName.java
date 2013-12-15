@@ -78,6 +78,7 @@ public class TheBestName {
 			weights.put(weight, value);
 		}
 		
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		ListIterator<Integer> iter = new ArrayList(weights.keySet()).listIterator(weights.size());
 		
 		ArrayList<String> named = new ArrayList<String>();

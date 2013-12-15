@@ -6,6 +6,7 @@ public class WordMarkovModel extends AbstractModel {
 	private String[] myWords;
 	private String prevString;
 	private Random myRandom;
+	@SuppressWarnings("unused")
 	private int lastK;
 	public static final int DEFAULT_COUNT = 100; // default # random letters
 													// generated
@@ -18,6 +19,7 @@ public class WordMarkovModel extends AbstractModel {
 
 	public void initialize(Scanner s) {
 		double start = System.currentTimeMillis();
+		@SuppressWarnings("unused")
 		int countChar = readChars(s);
 		myWords = myString.split("\\s+");
 		int countWord = myWords.length;

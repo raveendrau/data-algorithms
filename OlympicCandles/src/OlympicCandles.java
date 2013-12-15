@@ -10,6 +10,7 @@ public class OlympicCandles {
 		return longest;
 	}
 
+	@SuppressWarnings("unused")
 	public static Integer[] use(int night, Integer[] candles) {
 		ArrayList<Integer> candlesList = new ArrayList<Integer>(Arrays.asList(candles));
 		ArrayList<Integer> used = new ArrayList<Integer>();
@@ -21,12 +22,14 @@ public class OlympicCandles {
 		return candlesStep;
 	}
 	
+	@SuppressWarnings("unused")
 	public static int numberOfNights(int[] candles) {
 		int night = 0;
 		
 		return 0;
 	}
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		int[] candles0 = {2, 2, 2};
 		numberOfNights(candles0);

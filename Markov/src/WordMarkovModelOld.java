@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 
 /**
  * The model for the Markov text generation assignment. See methods
@@ -77,7 +76,8 @@ public class WordMarkovModelOld extends AbstractModel {
 		}    	
     }
     
-    public void smart(int k, int numLetters) {
+    @SuppressWarnings("unused")
+	public void smart(int k, int numLetters) {
         int start = myRandom.nextInt(myString.length() - k + 1);
         String str = myString.substring(start, start + k);   
         StringBuilder build = new StringBuilder();

@@ -2,6 +2,7 @@ import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
+
 import java.util.*;
 import java.awt.event.*;
 import java.io.*;
@@ -34,7 +35,11 @@ import java.io.*;
  */
 public class BoggleGUI extends JFrame {
 
-  private ILexicon myLexicon;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private ILexicon myLexicon;
   private IAutoPlayer computerPlayer;
   private IPlayer     humanPlayer;
   private IWordOnBoardFinder myFinder;
@@ -301,7 +306,12 @@ public class BoggleGUI extends JFrame {
    * defining some related methods.
    */
   private class BoggleBoardPanel extends JPanel {
-    public  final Color BACKGROUNDCOLOR = new Color(255, 219, 13);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public  final Color BACKGROUNDCOLOR = new Color(255, 219, 13);
 
     private DiePanel theDice[][];   // draw the Dice here
     private int rows, cols;   
@@ -376,7 +386,11 @@ public class BoggleGUI extends JFrame {
 
     // For displaying one Die on the board
     private class DiePanel extends JPanel {
-      private String face;
+      /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+	private String face;
       private boolean isHighlighted;
       private JLabel faceLabel;
 
@@ -412,16 +426,13 @@ public class BoggleGUI extends JFrame {
           }
       }
 
-      public String getFace() {
-        return face;
-      }
-
       /**
        * Draw one die including the letter centered in the middle of the die.
        * If highlight is true, we 
        * reverse the background and letter colors to highlight the die.
        */
-      public void paintComponent(Graphics g)  {
+      @SuppressWarnings("unused")
+	public void paintComponent(Graphics g)  {
         super.paintComponent(g);
                 
         int centeredXOffset, centeredYOffset;
@@ -453,7 +464,11 @@ public class BoggleGUI extends JFrame {
   } // class BoggeBoard
   
   class BoggleProgress extends JProgressBar{
-      private String myString;
+      /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String myString;
       
       public BoggleProgress(int min, int max){
           super(min,max);
@@ -473,11 +488,18 @@ public class BoggleGUI extends JFrame {
   // Maintains name, score, and word list information for one player
   class PlayerView extends JPanel implements IPlayerView{
    
-    private String playerName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String playerName;
         
     private final Font ScoreFont = new Font("SansSerif", Font.PLAIN, 18);
-    private final Font WordFont = new Font("Geneva", Font.PLAIN, 9);
-    private final Font LabelFont = new Font("Helvitica", Font.PLAIN, 9);
+    @SuppressWarnings("unused")
+	private final Font WordFont = new Font("Geneva", Font.PLAIN, 9);
+    @SuppressWarnings("unused")
+	private final Font LabelFont = new Font("Helvitica", Font.PLAIN, 9);
 
     private JPanel topPanel, wordPanel, namePanel, scorePanel;
     //private JTextArea wordArea;
@@ -587,7 +609,11 @@ public class BoggleGUI extends JFrame {
   } // class ScoreArea
 
   class WordEntryField extends JPanel {
-    private JTextField textField;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField textField;
     private JButton myDoneButton;
     private StringBuilder myString;
     

@@ -2,6 +2,7 @@ import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
+
 import java.util.*;
 import java.awt.event.*;
 import java.io.*;
@@ -32,6 +33,7 @@ import java.io.*;
  * of the License, or (at your option) any later version.  See
  * http://www.gnu.org/copyleft/gpl.html
  */
+@SuppressWarnings("serial")
 public class BoggleGUI extends JFrame {
 
   private ILexicon myLexicon;
@@ -412,16 +414,13 @@ public class BoggleGUI extends JFrame {
           }
       }
 
-      public String getFace() {
-        return face;
-      }
-
       /**
        * Draw one die including the letter centered in the middle of the die.
        * If highlight is true, we 
        * reverse the background and letter colors to highlight the die.
        */
-      public void paintComponent(Graphics g)  {
+      @SuppressWarnings("unused")
+	public void paintComponent(Graphics g)  {
         super.paintComponent(g);
                 
         int centeredXOffset, centeredYOffset;
@@ -476,8 +475,10 @@ public class BoggleGUI extends JFrame {
     private String playerName;
         
     private final Font ScoreFont = new Font("SansSerif", Font.PLAIN, 18);
-    private final Font WordFont = new Font("Geneva", Font.PLAIN, 9);
-    private final Font LabelFont = new Font("Helvitica", Font.PLAIN, 9);
+    @SuppressWarnings("unused")
+	private final Font WordFont = new Font("Geneva", Font.PLAIN, 9);
+    @SuppressWarnings("unused")
+	private final Font LabelFont = new Font("Helvitica", Font.PLAIN, 9);
 
     private JPanel topPanel, wordPanel, namePanel, scorePanel;
     //private JTextArea wordArea;

@@ -1,6 +1,7 @@
 import java.security.KeyStore.Entry;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class FriendScore {
 
 	public int highestScore(String[] friends) {

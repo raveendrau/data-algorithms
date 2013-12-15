@@ -31,6 +31,11 @@ import java.util.*;
 public class ExpandableList extends JList
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * construct an initially empty expandable list
      * with default # of entries (which is 8)
      */

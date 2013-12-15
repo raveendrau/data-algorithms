@@ -141,43 +141,6 @@ public class TrieLexicon implements ILexicon {
         }
         return count;
     }
-    
-    /**
-     * Write a method that returns a copy of the entire trie rooted at a node. 
-     * Trie nodes have parent pointers, though they're not shown in the diagram above. 
-     * The second parameter to a Trie-Node constructor is the node's parent.
-     */
-    /**
-     * Solution provided below not complete
-     */
-	private Node copyTrie(Node root) {
-		if(root == null) return null;
-		Node copy = new Node (root.info.charAt(0),null);
-		copy.isWord = root.isWord;
-		
-		if(!root.children.isEmpty()) {
-			for (Node child: root.children.values()) {
-				copy.children.put(child.info.charAt(0), copyTrie(child));
-			}
-		}
-		return copy;
-	}
-	/**
-	 * Write a method to traverse all nodes 
-	 * in a trie and return the number of words in the trie, 
-	 * by referencing the isWord field of each node. 
-	 */
-	private int wordCount (Node root) {
-		if (root == null) return 0;
-		int count = 0;
-		if (root.isWord) {
-			count = 1;
-		}
-		for (Node child: root.children.values()) {
-			count += wordCount(child);
-		}
-		return count;
-	}
 	
 	/**
 	 * Discuss at a high level how to collapse chains of nodes

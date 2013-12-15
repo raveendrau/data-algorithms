@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class FIFO {
 
-	public static void FIFO() {
+	public static void FIFO1() {
 		Queue<String> q = new LinkedList<String>();
 		q.add("Apple ");
 		q.add("iPad ");
@@ -33,7 +33,7 @@ public class FIFO {
 	}
 	
 	public static void main(String[] args) {
-		FIFO();
+		FIFO1();
 		LIFO();
 	}
 

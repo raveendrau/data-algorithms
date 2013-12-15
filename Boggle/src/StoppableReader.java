@@ -1,7 +1,6 @@
 import java.io.InputStream;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ProgressMonitor;
 import javax.swing.ProgressMonitorInputStream;

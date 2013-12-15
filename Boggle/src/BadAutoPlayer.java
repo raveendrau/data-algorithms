@@ -1,5 +1,4 @@
-import java.util.SortedSet;
-import java.util.TreeSet;
+
 
 /**
  * AutoPlayer that can't find any words. Useful

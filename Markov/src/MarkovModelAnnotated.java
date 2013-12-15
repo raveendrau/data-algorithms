@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 
 /**
  * The model for the Markov text generation assignment. See methods

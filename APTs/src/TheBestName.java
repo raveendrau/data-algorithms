@@ -78,7 +78,7 @@ public class TheBestName {
 			weights.put(weight, value);
 		}
 		
-		ListIterator<Integer> iter = new ArrayList(weights.keySet()).listIterator(weights.size());
+		ListIterator<Integer> iter = new ArrayList<Integer>(weights.keySet()).listIterator(weights.size());
 		
 		ArrayList<String> named = new ArrayList<String>();
 		
