@@ -1,6 +1,6 @@
 /*
  * AnimalGameModel.java
- * TODO: YOUR NAME HERE.
+ * TODO: Keng Low, kl78
  * 
  * Implementation of IAnimalGameModel.
  */
@@ -34,15 +34,15 @@ public class AnimalGameModel implements IAnimalModel {
 		myView.setEnabled(true);
 	}
 
-	private AnimalNode readHelper(Scanner s) {
-		String line = s.nextLine();
-		if (...line is a leaf...) {
+	// private AnimalNode readHelper(Scanner s) {
+		// String line = s.nextLine();
+		// if (...line is a leaf...) {
 			// Construct a leaf AnimalNode from line, and return it.
-			}
+		//	}
 	    // Make a recursive call to read the left subtree.
 	    // Make a recursive call to read the right subtree.
 	    // Construct the resulting AnimalNode and return it.
-		}
+		// }
 
 	
 	@Override
