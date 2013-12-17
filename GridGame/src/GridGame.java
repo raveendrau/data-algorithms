@@ -25,10 +25,19 @@ public class GridGame {
 	 * @return boolean, if 'X' can be placed in the cell 
 	 */
 	private static boolean canPlace(int r, int c) {
-		if ()
-		char foo = myGrid[r][c];
-		if (foo == '.') return true;
-		else return false;
+		if (r != 0) {
+			 if (myGrid[r-1][c] == 'X') return false; 
+		}
+		if (c != 0) {
+			if (myGrid[r][c-1] == 'X') return false;
+		}
+		if (r != 3) {
+			if (myGrid[r+1][c] == 'X') return false;
+		}
+		if (c != 3) {
+			if (myGrid[r][c+1] == 'X') return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -59,7 +68,7 @@ public class GridGame {
 					myGrid[r][c] = 'X';
 					int oppwins = findWins();
 					// update total here
-					if (oppwins != 0) total += 1;
+					if (oppwins == 0) total += 1;
 					// reset myGrid here
 					myGrid[r][c] = '.';
 				}
