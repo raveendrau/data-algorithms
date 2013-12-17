@@ -13,7 +13,9 @@ public class AnimalGameModel implements IAnimalModel {
 	// this pointer to the view lets you tell the view to do things (show messages,
 	// for example).
 	private AnimalGameViewer myView;
-    
+    private AnimalNode myRoot;
+    private AnimalNode myCurrent;
+	
 	@Override
 	public void addNewKnowledge(String question) {
 		// TODO Auto-generated method stub
@@ -32,6 +34,17 @@ public class AnimalGameModel implements IAnimalModel {
 		myView.setEnabled(true);
 	}
 
+	private AnimalNode readHelper(Scanner s) {
+		String line = s.nextLine();
+		if (...line is a leaf...) {
+			// Construct a leaf AnimalNode from line, and return it.
+			}
+	    // Make a recursive call to read the left subtree.
+	    // Make a recursive call to read the right subtree.
+	    // Construct the resulting AnimalNode and return it.
+		}
+
+	
 	@Override
 	public void newGame() {
 		// TODO Auto-generated method stub
