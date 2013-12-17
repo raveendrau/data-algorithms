@@ -25,6 +25,7 @@ public class GridGame {
 	 * @return boolean, if 'X' can be placed in the cell 
 	 */
 	private static boolean canPlace(int r, int c) {
+		if (myGrid[r][c] == 'X') return false;
 		if (r != 0) {
 			 if (myGrid[r-1][c] == 'X') return false; 
 		}
