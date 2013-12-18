@@ -23,8 +23,10 @@ public class AnimalGameModel implements IAnimalModel {
 	@Override
 	public void addNewKnowledge(String question) {
 		question = question.replace("?", "");
-		AnimalNode node = new AnimalNode(question, myCurrent, myLeaf)
+		AnimalNode node = new AnimalNode(question, myCurrent, myLeaf);
 		myView.update("New Knowledge: "+question);
+		myLast.setNo(node);
+		newGame();
 	}
 
 	@Override
@@ -99,13 +101,13 @@ public class AnimalGameModel implements IAnimalModel {
 		String userAnswer;
 		if(yes) {
 			node = myCurrent.getYes();
-			userAnswer = "YES == ";
+			userAnswer = "== YES";
 		}
 		else {
 			node = myCurrent.getNo();
-			userAnswer = "NO == ";
+			userAnswer = "== NO";
 		}
-		userAnswer = userAnswer + question + "\n";
+		userAnswer = question + userAnswer + "\n";
 		myPath.append(userAnswer);
 		
 		// proceeding to next step
