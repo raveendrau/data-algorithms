@@ -38,9 +38,10 @@ public class AnimalGameModel implements IAnimalModel {
 		myView.setEnabled(true);
 	}
 
-	// private AnimalNode readHelper(Scanner s) {
-		// String line = s.nextLine();
-		// if (...line is a leaf...) {
+	private AnimalNode readHelper(Scanner s) {
+		String line = s.nextLine();
+		mySize += 1;
+		// if (...line is a leaf) {
 			// Construct a leaf AnimalNode from line, and return it.
 		//	}
 	    // Make a recursive call to read the left subtree.
@@ -48,6 +49,14 @@ public class AnimalGameModel implements IAnimalModel {
 	    // Construct the resulting AnimalNode and return it.
 		// }
 
+	private boolean isALeaf(String line) {
+		if (line.contains("#Q:")) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 	
 	@Override
 	public void newGame() {
