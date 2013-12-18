@@ -88,8 +88,24 @@ public class AnimalGameModel implements IAnimalModel {
 	}
 
 	@Override
-	public void write(FileWriter writer) {
-		// TODO Auto-generated method stub
-		
+	public void write(FileWriter writer) throws IOException {
+		writeHelper(myRoot, writer);
+		writer.close();
+	}
+	
+	public void writeHelper(AnimalNode node, FileWriter writer) throws IOException {
+		// See if this node is a leaf
+		if (node.getYes() == null && node.getNo() == null) {
+			writer.write(node.toString()+"\n");
+		}
+		else {
+			writer.write("#Q:"+node.toString()+"\n");
+			if (node.getYes() != null) {
+				writeHelper(node.getYes(), writer);
+			}
+			else if (node.getNo() != null) {
+				writeHelper(node.getNo(), writer);
+			}
+		}
 	}
 }

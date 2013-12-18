@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.io.FileWriter;
+import java.io.IOException;
 
 public interface IAnimalModel {
 	
@@ -14,8 +15,9 @@ public interface IAnimalModel {
      * it can be read back in to play a game. Does not take care of 
      * closing the FileWriter; you should do that yourself.
      * @param writer a FileWriter to write to.
+     * @throws IOException 
      */
-    public void write(FileWriter writer);
+    public void write(FileWriter writer) throws IOException;
     
     /**
      * Called by view to process a yes/no response from the user. The response should
