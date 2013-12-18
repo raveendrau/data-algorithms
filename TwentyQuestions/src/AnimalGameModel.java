@@ -15,10 +15,14 @@ public class AnimalGameModel implements IAnimalModel {
 	private AnimalGameViewer myView;
     private AnimalNode myRoot;
     private AnimalNode myCurrent;
+    private AnimalNode myPrevious;
+    private AnimalNode myNewLeaf;
+    private StringBuilder myPath;
+    private int mySize;
 	
 	@Override
 	public void addNewKnowledge(String question) {
-		// TODO Auto-generated method stub
+		AnimalNode addedNode = new AnimalNode(question, my)
 		
 	}
 
