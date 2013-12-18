@@ -73,7 +73,7 @@ public class AnimalGameModel implements IAnimalModel {
 	@Override
 	public void newGame() {
 		myPath = new StringBuilder();
-		myPath.append("Your path is displayed below:\n")
+		myPath.append("Your path is displayed below:\n");
 		myCurrent = myRoot;
 		newQuestion(myCurrent);
 	}
