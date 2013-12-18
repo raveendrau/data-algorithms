@@ -78,6 +78,16 @@ public class AnimalGameModel implements IAnimalModel {
 		newQuestion(myCurrent);
 	}
 
+	private void newQuestion(AnimalNode node) {
+		String nodeToString = node.toString();
+		// if node begins with "#Q:"
+		if (nodeToString.contains("#Q:")) {
+			nodeToString.replace("#Q:", "");
+		}
+		nodeToString = nodeToString + "?\n";
+		myView.update(nodeToString);
+	}
+	
 	@Override
 	public void processYesNo(boolean yes) {
 		// TODO Auto-generated method stub
