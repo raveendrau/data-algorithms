@@ -15,7 +15,7 @@ public class AnimalGameModel implements IAnimalModel {
 	private AnimalGameViewer myView;
     private AnimalNode myRoot;
     private AnimalNode myCurrent;
-    private AnimalNode myPrevious;
+    private AnimalNode myLast;
     private AnimalNode myNewLeaf;
     private StringBuilder myPath;
     private int mySize;
@@ -90,8 +90,34 @@ public class AnimalGameModel implements IAnimalModel {
 	
 	@Override
 	public void processYesNo(boolean yes) {
-		// TODO Auto-generated method stub
+		AnimalNode node;
+		String question = myCurrent.toString();
+		String userAnswer;
+		if(yes) {
+			node = myCurrent.getYes();
+			userAnswer = "YES == ";
+		}
+		else {
+			node = myCurrent.getNo();
+			userAnswer = "NO == ";
+		}
+		userAnswer = userAnswer + question + "\n";
+		myPath.append(userAnswer);
 		
+		// proceeding to next step
+		if (node == null && !yes) {
+			myView.update(myPath.toString());
+			myView.getNewInfoLeaf();
+		}
+		else if (node == null && yes) {
+			myView.showDialog("Game over");
+			newGame();
+		}
+		else {
+			myLast = myCurrent;
+			myCurrent = node;
+			newQuestion(myCurrent);
+		}
 	}
 
 	@Override
