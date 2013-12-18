@@ -34,20 +34,32 @@ public class AnimalGameModel implements IAnimalModel {
 
 	@Override
 	public void initialize(Scanner s) {
-		// TODO Auto-generated method stub
+		myRoot = readHelper(s);
+		String numOfNodes = Integer.toString(mySize);
+		String declareNumNodes = "There are "+numOfNodes+" nodes in the tree.";
+		myView.showMessage(declareNumNodes);
 		myView.setEnabled(true);
+		newGame();
 	}
 
 	private AnimalNode readHelper(Scanner s) {
 		String line = s.nextLine();
 		mySize += 1;
-		// if (...line is a leaf) {
+		// if line is a leaf
+		if (isALeaf(line)) {
 			// Construct a leaf AnimalNode from line, and return it.
-		//	}
+			AnimalNode leafNode = new AnimalNode(line, null, null);
+			return leafNode;
+		}
+		String lineWithoutQn = line.replace("#Q:", "");
 	    // Make a recursive call to read the left subtree.
+		AnimalNode leftNode = readHelper(s);
 	    // Make a recursive call to read the right subtree.
+		AnimalNode rightNode = readHelper(s);
 	    // Construct the resulting AnimalNode and return it.
-		// }
+		AnimalNode newNode = new AnimalNode(lineWithoutQn, leftNode, rightNode);
+		return newNode;
+	}
 
 	private boolean isALeaf(String line) {
 		if (line.contains("#Q:")) {
