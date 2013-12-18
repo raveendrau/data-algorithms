@@ -16,20 +16,24 @@ public class AnimalGameModel implements IAnimalModel {
     private AnimalNode myRoot;
     private AnimalNode myCurrent;
     private AnimalNode myLast;
-    private AnimalNode myNewLeaf;
+    private AnimalNode myLeaf;
     private StringBuilder myPath;
     private int mySize;
 	
 	@Override
 	public void addNewKnowledge(String question) {
-		AnimalNode addedNode = new AnimalNode(question, my)
-		
+		question = question.replace("?", "");
+		AnimalNode node = new AnimalNode(question, myCurrent, myLeaf)
+		myView.update("New Knowledge: "+question);
 	}
 
 	@Override
 	public void addNewQuestion(String noResponse) {
-		// TODO Auto-generated method stub
-		
+		noResponse = noResponse.replace("?", "");
+		AnimalNode newLeaf = new AnimalNode(noResponse, null, null);
+		myLeaf = newLeaf;
+		myView.update("New Question: "+noResponse);
+		myView.getDifferentiator();
 	}
 
 	@Override

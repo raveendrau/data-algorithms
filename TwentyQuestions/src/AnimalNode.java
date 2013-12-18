@@ -28,4 +28,12 @@ public class AnimalNode {
 	/*
 	 * You may need to add setter functions. Go right ahead.
 	 */
+	
+	public void setYes(AnimalNode node) {
+		myYesChild = node;
+	}
+	
+	public void setNo(AnimalNode node) {
+		myNoChild = node;
+	}
 }
