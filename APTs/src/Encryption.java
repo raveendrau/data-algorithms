@@ -5,7 +5,8 @@ import java.util.Set;
 
 
 public class Encryption {
-	static String encrypt(String message) {
+	
+	public String encrypt(String message) {
 		
 		/* Generate alphabet index */
 		Map<Integer, Character> alphabet = new HashMap<Integer, Character>();
@@ -17,11 +18,11 @@ public class Encryption {
 			}
 			alphabet.put(i,letter);
 		}
-		System.out.println(alphabet);
+//		System.out.println(alphabet);
 		
 		/* Convert String to char Array */
 		char[] charArray = message.toCharArray();
-		System.out.println(charArray);
+//		System.out.println(charArray);
 		
 		/* Create set to store appearance of alphabets */
 		Set<Character> charSet = new HashSet<Character>();
@@ -54,13 +55,13 @@ public class Encryption {
 		
 		/* Make String from Character string */
 		String ans = new String(code);
-		System.out.println(ans);
+//		System.out.println(ans);
 		return ans;
 	}
 	
-	public static void main(String [] args) {
-		encrypt("hello");
-	}
+//	public static void main(String [] args) {
+//		encrypt("hello");
+//	}
 }
 		
 

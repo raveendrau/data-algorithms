@@ -14,8 +14,7 @@ import java.math.BigInteger;
 
 @SuppressWarnings("unused")
 
-public class IsomorphicWords {
-
+public class IsomorphicWords1 {
 	
 	static Collection<Integer> numLetter(String word) {
 		/* Make a container to store the letters of each word. Use a map.*/
@@ -107,7 +106,7 @@ public class IsomorphicWords {
 		return match;
 	}
 	
-	public static int countPairs1(String[] words) {
+	public int countPairs1(String[] words) {
 		int result = mapGen(words);
 		System.out.println("Final: "+result);
 		return result;
@@ -135,7 +134,7 @@ public class IsomorphicWords {
 		return true;
 	}
 	
-	public static int countPairs(String[] words) {
+	public int countPairs(String[] words) {
 		int ct = 0;
 		for (int i = 0; i < words.length-1; i++) {
 			String w1 = words[i];
@@ -147,12 +146,12 @@ public class IsomorphicWords {
 		return ct;
 	}
 	
-	public static void main(String[] args){
-		String[] pairs1 = {"abca", "zbxz", "opqr"};
-		System.out.println(countPairs(pairs1));
-		String[] pairs2 = {"aa", "ab", "bb", "cc", "cd"};
-		System.out.println(countPairs(pairs2));
-		String[] pairs3 = {"cacccdaabc", "cdcccaddbc", "dcdddbccad", "bdbbbaddcb", "bdbcadbbdc", "abaadcbbda", "babcdabbac", "cacdbaccad", "dcddabccad", "cacccbaadb", "bbcdcbcbdd", "bcbadcbbca"};
-		System.out.println(countPairs(pairs3));
-	}
+//	public static void main(String[] args){
+//		String[] pairs1 = {"abca", "zbxz", "opqr"};
+//		System.out.println(countPairs(pairs1));
+//		String[] pairs2 = {"aa", "ab", "bb", "cc", "cd"};
+//		System.out.println(countPairs(pairs2));
+//		String[] pairs3 = {"cacccdaabc", "cdcccaddbc", "dcdddbccad", "bdbbbaddcb", "bdbcadbbdc", "abaadcbbda", "babcdabbac", "cacdbaccad", "dcddabccad", "cacccbaadb", "bbcdcbcbdd", "bcbadcbbca"};
+//		System.out.println(countPairs(pairs3));
+//	}
 }

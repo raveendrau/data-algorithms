@@ -37,8 +37,8 @@ public class Anonymous {
 					chk ++;
 				}
 			}
-			System.out.println("The value of chk is "+chk);
-			System.out.println("The value of iter is "+iter);
+//			System.out.println("The value of chk is "+chk);
+//			System.out.println("The value of iter is "+iter);
 			if (chk == iter) {
 				hits ++;
 			}
