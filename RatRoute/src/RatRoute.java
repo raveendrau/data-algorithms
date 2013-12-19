@@ -1,9 +1,12 @@
 
-public class RatRoute {
-
+public class RatRoute { 
+	
+	
+	
 	public static int numRoutes(String[] enc) {
 		return 0;
 	}
+	
 
 	public static void main(String[] args) {
 		String[] enc0 = {
