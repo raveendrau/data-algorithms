@@ -16,16 +16,16 @@ public class SoccerLeagues {
 	public int[] points(String[] matches) {
 		/* Create empty array of team scores */
 		int teams = matches.length;
-		System.out.println("There are a total of " + teams + " teams");
+//		System.out.println("There are a total of " + teams + " teams");
 		int[] scores = new int[teams];
-		System.out.println("This is the board where scores are to be added " +
-				"\n" + Arrays.toString(scores));
+//		System.out.println("This is the board where scores are to be added " +
+//				"\n" + Arrays.toString(scores));
 		int team = 0;
 		for (String match : matches ) {
-			System.out.println("At team " + team + "'s home ground, these are the matches played");
+//			System.out.println("At team " + team + "'s home ground, these are the matches played");
 			for (int awayTeam = 0; awayTeam < match.length(); awayTeam++) {
 				char result = match.charAt(awayTeam);
-				System.out.println("This is the game's outcome " + result + " for team " + team);
+//				System.out.println("This is the game's outcome " + result + " for team " + team);
 				if (result == 'W') {
 					scores[team] += 3;
 					scores[awayTeam] += 0;
