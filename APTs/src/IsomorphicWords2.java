@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -7,12 +9,47 @@ import java.util.Set;
 
 public class IsomorphicWords2 {
 	
-	static int countPairs(String[] words) {
-		
+	public static int countPairs(String[] words) {
+		Map<String, String> map = new HashMap<String, String>();
+		int pairs = 0;
+		for (int i = 0; i < words.length; i++) {
+			for (int j = i + 1; j < words.length; j++) {
+				if(match(words[i],words[j])) pairs++;
+				}
+			}
+		return pairs;
+	}
+	
+	static String[] analyze(String word) {
+		Map<Character, Integer> map = new HashMap<Character, Integer>();
+		for (Character c : word.toCharArray()) {
+			if (map.containsKey(c)) {
+				map.put(c, map.get(c)+1);
+			}
+			else {
+				map.put(c, 1);
+			}
+		}
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		for (Character key : map.keySet()) {
+			list.add(map.get(key));
+		}
+		Collections.sort(list);
+		String[] results = new String[list.size()];
+		int loop = 0;
+		for (Integer i : list) {
+			results[loop] = Integer.toString(i);
+			loop++;
+		}
+		System.out.println(Arrays.toString(results));
+		return results;
 	}
 	
 	static boolean match(String word1, String word2) {
-		
+		if(Arrays.equals(analyze(word1), analyze(word2))) {
+			System.out.println(word1+" "+word2);
+			return true;
+		}
 		return false;
 	}
 	
