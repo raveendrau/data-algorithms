@@ -43,7 +43,7 @@ public class Anonymous {
 				hits ++;
 			}
 		}
-		System.out.println(hits);
+//		System.out.println(hits);
 		return hits;
 	}
 
