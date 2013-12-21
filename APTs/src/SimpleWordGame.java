@@ -15,9 +15,9 @@ public class SimpleWordGame {
 			if(answers.contains(guess)) {
 				int wordLength = guess.length();
 				int score = wordLength * wordLength;
-				System.out.println("Score is "+score);
+//				System.out.println("Score is "+score);
 				total = score + total;
-				System.out.println("Total is "+total);
+//				System.out.println("Total is "+total);
 			}
 		}
 		return total;
