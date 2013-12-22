@@ -15,6 +15,7 @@ public class GoodWordOnBoardFinder implements IWordOnBoardFinder{
 				}
 			}
 		}
+		return new ArrayList<BoardCell>();
 	}
 	
 	public boolean helper(BoggleBoard board, int r, int c, 
@@ -54,10 +55,61 @@ public class GoodWordOnBoardFinder implements IWordOnBoardFinder{
 		 * for (e.g., you can use the method .contains to see if a BoardCell
 		 * has been used before). 
 		 */
+		
+		// Be sure not to use a previously used board cell.
 		if (list.contains(cell)) {
 			return false;
 		}
 		
-		String myCurrent = board.getFace(r, c);
+		// Get the cube face at the specified location
+		String myFace = board.getFace(r, c);
+	
+		// Initialize the subsquent index
+		int nextIndex = 0;
+		
+		
+		/** 
+		 * "Qu" is worth two characters.
+		 * It can occur anywhere except at the end of the word.
+		 * squid would score two points (for a five-letter word) despite 
+		 * being formed from a chain of only four cubes.
+		 */
+		if (myFace.equals("qu")) {
+			// If (the reduced word length is shorter
+			if (index + 2 > word.length() - 1) {
+				nextIndex = word.length() - 1;
+			}
+			// If the two-character bump is shorter
+			else if (index + 2 < word.length() - 1) {
+				nextIndex = index + 2;
+			}
+		}
+		else {
+			nextIndex = index + 1;
+		}
+		
+		/**
+		 * If the specified character in the string matches the character
+		 * in the (row, column) board cell then up to eight recursive calls 
+		 * will be made to find the next letter in the string 
+		 * (changed parameter in recursive call) in a neighboring cell
+		 * (changed parameter in recursive call).
+		 */
+		String characters = word.substring(index, nextIndex);
+		
+		if (myFace.equals(characters)) {
+			list.add(cell);
+			int[] rdelta = {-1,-1,-1, 0, 0, 1, 1, 1}; 
+			int[] cdelta = {-1, 0, 1,-1, 1,-1, 0, 1}; 
+			for(int k = 0; k < rdelta.length; k++){ 
+			  if (helper(board, r + rdelta[k], c + cdelta[k],
+					  list, index, word)) {
+				  return true;  
+			  }
+			  // If the cell is useless
+			  list.remove(cell);
+			}
+		}
+		return false;
 	}
 }
