@@ -4,7 +4,7 @@ import java.util.List;
 
 public class GoodWordOnBoardFinder implements IWordOnBoardFinder{
 
-	
+	@Override
 	public List<BoardCell> cellsForWord(BoggleBoard board, String word) {
 		List<BoardCell> list = new ArrayList<BoardCell>();
 		for (int r = 0; r < board.size(); r++) {
@@ -34,7 +34,7 @@ public class GoodWordOnBoardFinder implements IWordOnBoardFinder{
 		 * don't continue the search 
 		 */
 		if (r < 0 || r >= board.size() ||
-				c < 0 || c > board.size()) {
+				c < 0 || c >= board.size()) {
 			return false;
 		}
 		
@@ -65,7 +65,7 @@ public class GoodWordOnBoardFinder implements IWordOnBoardFinder{
 		String myFace = board.getFace(r, c);
 	
 		// Initialize the subsquent index
-		int nextIndex = 0;
+		int nextIndex;
 		
 		
 		/** 
@@ -75,14 +75,19 @@ public class GoodWordOnBoardFinder implements IWordOnBoardFinder{
 		 * being formed from a chain of only four cubes.
 		 */
 		if (myFace.equals("qu")) {
-			// If (the reduced word length is shorter
-			if (index + 2 > word.length() - 1) {
-				nextIndex = word.length() - 1;
-			}
-			// If the two-character bump is shorter
-			else if (index + 2 < word.length() - 1) {
-				nextIndex = index + 2;
-			}
+//			// If (the reduced word length is shorter
+//			if (index + 2 > word.length() - 1) {
+//				nextIndex = word.length() - 1;
+//			}
+//			// If the two-character bump is shorter
+//			else if (index + 2 < word.length() - 1) {
+//				nextIndex = index + 2;
+//			}
+//			// If their lengths are equal
+//			else {
+//				nextIndex = index + 2;
+//			}
+			nextIndex = Math.min(index + 2, word.length() - 1);
 		}
 		else {
 			nextIndex = index + 1;
@@ -103,12 +108,12 @@ public class GoodWordOnBoardFinder implements IWordOnBoardFinder{
 			int[] cdelta = {-1, 0, 1,-1, 1,-1, 0, 1}; 
 			for(int k = 0; k < rdelta.length; k++){ 
 			  if (helper(board, r + rdelta[k], c + cdelta[k],
-					  list, index, word)) {
+					  list, nextIndex, word)) {
 				  return true;  
 			  }
-			  // If the cell is useless
-			  list.remove(cell);
 			}
+			// If the cell is useless
+			list.remove(cell);
 		}
 		return false;
 	}
