@@ -9,8 +9,33 @@ public class PrefixCode {
 	 * of a String in words that is a prefix of another String in words. 
 	 * (That index should have no extra leading zeros.)
 	 */
+	public boolean isPrefix(String word1, String word2) {
+		if (word1.length() >= word2.length()) {
+			return false;
+		}
+		char[] charArray1 = word1.toCharArray();
+		char[] charArray2 = word2.toCharArray();
+		for (int i = 0; i < charArray1.length; i++) {
+			if (charArray1[i] != charArray2[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public String isOne(String[] words) {
-		// TODO Auto-generated constructor stub
+		for (int i = 0; i < words.length; i++) {
+			String word1 = words[i];
+			for (int j = 0; j < words.length; j++) {
+				String word2 = words[j];
+				if (i != j) {
+					if (isPrefix(word1, word2)) {
+						return "No, "+i;
+					}
+				}
+			}
+		}
+		return "Yes";
 	}
 
 	public static void main(String[] args) {

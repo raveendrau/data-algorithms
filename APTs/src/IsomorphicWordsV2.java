@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 
+@SuppressWarnings("unused")
 public class IsomorphicWordsV2 {
 	
 	public static int countPairs(String[] words) {

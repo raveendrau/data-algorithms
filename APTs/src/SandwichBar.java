@@ -3,6 +3,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+@SuppressWarnings("unused")
 public class SandwichBar {
 
 	/**
