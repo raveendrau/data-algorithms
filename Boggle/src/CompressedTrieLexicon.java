@@ -1,7 +1,14 @@
-
-
 import java.util.*;
 
+/**
+ * @author keng
+ *
+ * In implementing the class you’ll write code to remove nodes 
+ * with only one child as described below. 
+ * A chain of nodes pointed to by one link 
+ * can be compressed into a node storing 
+ * a suffix rather than a single character. 
+ */
 
 public class CompressedTrieLexicon extends TrieLexicon {
 
@@ -23,7 +30,7 @@ public class CompressedTrieLexicon extends TrieLexicon {
     protected Node myRoot; // root of entire trie
     protected int mySize;
 
-    public TrieLexicon() {
+    public CompressedTrieLexicon() {
         myRoot = new Node('x', null);
         mySize = 0;
     }
@@ -32,9 +39,41 @@ public class CompressedTrieLexicon extends TrieLexicon {
         return mySize;
     }
 
+    /**
+     * You’ll need to create a new method compress 
+     * to perform this one-child compression, 
+     * you’ll call this method in the load method you override as below
+     */
+    @Override
     public void load(ArrayList<String> list){
-        for(String s : list) add(s);
+        super.load(list);
+        compress();
     }
+    
+    
+    /**
+     * To compress the trie you’ll write code that finds every leaf. 
+     * From each leaf you’ll write code that follows the parent pointers 
+     * back up the trie until either a node representing a word is found 
+     * or a node that has more than one child is found.
+     * 
+     * Note that the number of nodes eliminated is 
+     * one less than the length of the suffix stored — 
+     * we need one node to store the suffix.
+     * 
+     * The suffix of the single-node-pointing-path is stored 
+     * after the parent pointers are followed. 
+     * Since the trie nodes store a string, they can certainly store a suffix. 
+     * You’ll need to code a new version ofwordStatus 
+     * in the CompressedTrie class to recognize when a suffix-node is reached.
+     */
+    public void compress() {
+    	// Initialize list of leaves
+    	
+    }
+    
+    public Array
+    
     public boolean add(String s) {
         Node t = myRoot;
 
@@ -85,11 +124,26 @@ public class CompressedTrieLexicon extends TrieLexicon {
         }
     }
 
+    /**
+     * In particular, note that when a node has nothing below it, 
+     * the path to that node represents a word that 
+     * isn’t a prefix of another word. 
+     * Because of how the TrieLexicon is constructed, 
+     * determining if a sequence of characters is a word or a prefix 
+     * is fairly straightforward as shown below.
+     */
     public LexStatus wordStatus(StringBuilder s){
         Node t = myRoot;
         for (int k = 0; k < s.length(); k++) {
             char ch = s.charAt(k);
             t = t.children.get(ch);
+            /**
+             * Note that if the path hits a null pointer 
+             * the path cannot represent either a prefix or a word 
+             * since any pointer out of a node ultimately 
+             * reaches a leaf that represents a word that 
+             * isn’t a prefix of another word.
+             */
             if (t == null)
                 return LexStatus.NOT_WORD; // no path below? done
         }
