@@ -87,9 +87,9 @@ public class LexiconBenchmark {
            myList.add(s.next());
        }
        stress(new SimpleLexicon());
-//       stress(new ArrayLexicon());
+       stress(new BinarySearchLexicon());
        stress(new TrieLexicon());
-//       stress(new CompressedTrieLexicon());
+       stress(new CompressedTrieLexicon());
 //       stress(new SmallTrieLexicon());
     }
 
