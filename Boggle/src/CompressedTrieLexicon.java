@@ -183,7 +183,7 @@ public class CompressedTrieLexicon extends TrieLexicon {
 				}
 				else {
 					String appendage = t.info.substring(0, characters.length());
-					return characters.equals(characters) ? LexStatus.PREFIX : LexStatus.NOT_WORD;
+					return characters.equals(appendage) ? LexStatus.PREFIX : LexStatus.NOT_WORD;
 				}
 			}
             else {
