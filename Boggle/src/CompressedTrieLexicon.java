@@ -69,10 +69,29 @@ public class CompressedTrieLexicon extends TrieLexicon {
      */
     public void compress() {
     	// Initialize list of leaves
-    	ArrayList<Node> leaves = new ArrayList<Node>();
+    	ArrayList<Node> myLeaves = new ArrayList<Node>();
     	// Get a list of leaves
-    	myLeaves = getLeaves(myRoot, leaves);
-    	
+    	myLeaves = getLeaves(myRoot, myLeaves);
+    	for (Node node : myLeaves) {
+			// If the parent of a node is a word, or
+    		// children of the parent node is greater than one
+    		boolean excluded = node.parent.isWord || 
+    				node.parent.children.size() > 1;
+    		// Begin while loop
+    		while (!excluded) {
+				Node parent = node.parent;
+				// Combine information in parent and child
+				parent.info = parent.info + node.info;
+				// Destroy children
+				parent.children.clear();
+				// Point node to parent
+				node = parent;
+				// Update boolean for next iteration of while loop
+				excluded = node.parent.isWord || 
+	    				node.parent.children.size() > 1; 
+			}
+    		
+		}
     }
     
     public ArrayList<Node> getLeaves(Node root, ArrayList<Node> list) {
@@ -153,16 +172,32 @@ public class CompressedTrieLexicon extends TrieLexicon {
         Node t = myRoot;
         for (int k = 0; k < s.length(); k++) {
             char ch = s.charAt(k);
-            t = t.children.get(ch);
-            /**
-             * Note that if the path hits a null pointer 
-             * the path cannot represent either a prefix or a word 
-             * since any pointer out of a node ultimately 
-             * reaches a leaf that represents a word that 
-             * isnÕt a prefix of another word.
-             */
-            if (t == null)
-                return LexStatus.NOT_WORD; // no path below? done
+            // If the node is longer than one character
+            if (t.info.length() > 1) {
+				String characters = s.substring(k - 1);
+				if (t.info.length() == characters.length()) {
+					return characters.equals(t.info) ? LexStatus.WORD : LexStatus.NOT_WORD;
+				}
+				else if (t.info.length() < characters.length()) {
+					return LexStatus.NOT_WORD;
+				}
+				else {
+					String appendage = t.info.substring(0, characters.length());
+					return characters.equals(characters) ? LexStatus.PREFIX : LexStatus.NOT_WORD;
+				}
+			}
+            else {
+            	t = t.children.get(ch);
+                /**
+                 * Note that if the path hits a null pointer 
+                 * the path cannot represent either a prefix or a word 
+                 * since any pointer out of a node ultimately 
+                 * reaches a leaf that represents a word that 
+                 * isnÕt a prefix of another word.
+                 */
+                if (t == null)
+                    return LexStatus.NOT_WORD; // no path below? done
+			}
         }
         return t.isWord ? LexStatus.WORD : LexStatus.PREFIX; 
     }
