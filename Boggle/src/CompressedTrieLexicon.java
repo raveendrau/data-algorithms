@@ -69,10 +69,27 @@ public class CompressedTrieLexicon extends TrieLexicon {
      */
     public void compress() {
     	// Initialize list of leaves
+    	ArrayList<Node> leaves = new ArrayList<Node>();
+    	// Get a list of leaves
+    	myLeaves = getLeaves(myRoot, leaves);
     	
     }
     
-    public Array
+    public ArrayList<Node> getLeaves(Node root, ArrayList<Node> list) {
+    	// If node is a null pointer
+    	if (root == null) {
+			return null;
+		}
+    	// If there are no values from children
+    	if (oneWay(root) == 0) {
+			list.add(root);
+		}
+    	// Begin recursive function
+    	for (Node node : root.children.values() ) {
+			getLeaves(node, list);
+		}
+    	return list;
+    }
     
     public boolean add(String s) {
         Node t = myRoot;
