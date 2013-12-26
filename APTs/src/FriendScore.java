@@ -47,7 +47,7 @@ public class FriendScore {
 					}
 				}	
 			}
-			System.out.println(table);
+//			System.out.println(table);
 			
 			// So, three people A, B, C. If A and C are not friends, 
 			// we check if B is a friend with A and C.
@@ -59,13 +59,13 @@ public class FriendScore {
 //				System.out.println("key "+key+" value "+value);
 				if (value == true) {
 					count++;
-					System.out.println(key+" is a friend, count is "+count);
+//					System.out.println(key+" is a friend, count is "+count);
 				}
 				// If the i-th element and the j-th character are not friends,
 				// Escape once we find a connection for one person to another person
 				// I.e. There might be more be both B and a D that are friends with C.
 				if (value == false) {
-					System.out.print(key+" is not a friend of "+i);
+//					System.out.print(key+" is not a friend of "+i);
 					// What are we looking for? Using Example 3,
 					// Looking at Person 2, who is friends with Person 1 and 3
 					// We check if Person 1 and 3 are friends with 4 and 5.
@@ -77,7 +77,7 @@ public class FriendScore {
 							
 							// Get the people who are friends with person
 							if (value1 == true) {
-								System.out.println(", but "+key1+" is a friend");
+//								System.out.println(", but "+key1+" is a friend");
 								String friend1 = friends[key1];
 //									System.out.println("friend1 "+friend1);
 								// Go through ties of the person
@@ -92,7 +92,7 @@ public class FriendScore {
 							
 							if (mutualFriend == true) {
 //								count++;
-								System.out.println("A mutual friend of "+key+" is found for "+i+" count now "+count);
+//								System.out.println("A mutual friend of "+key+" is found for "+i+" count now "+count);
 								break;
 								}
 							
@@ -100,11 +100,11 @@ public class FriendScore {
 					
 						}
 				}
-			System.out.println(scores);
+//			System.out.println(scores);
 			scores.add(count);
 			}
 		int top = Collections.max(scores);
-		System.out.println(top);
+//		System.out.println(top);
 		return top;
 		}
 //	public static void main(String[] args) {

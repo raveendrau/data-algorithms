@@ -12,22 +12,22 @@ public class Dirsort {
 		ArrayList<String> newDirs = new ArrayList<String>();
 		
 		for (String dir: dirs) {
-			System.out.print(dir);
+//			System.out.print(dir);
 			int key = dir.split("/").length;
-			System.out.println(" key: "+key);
+//			System.out.println(" key: "+key);
 			
 			if (table.containsKey(key)) {
-				System.out.println("Contains key: "+key);
+//				System.out.println("Contains key: "+key);
 				ArrayList<String> value = table.get(key);
 				value.add(dir);
-				System.out.println(table);
+//				System.out.println(table);
 			}
 			
 			else {
 				ArrayList<String> value = new ArrayList<String>();
 				value.add(dir);
 				table.put(key, value);
-				System.out.println(table);
+//				System.out.println(table);
 			}
 		}
 		
@@ -37,7 +37,7 @@ public class Dirsort {
 		}
 		
 		String[] lastDirs = newDirs.toArray(new String[newDirs.size()]);
-		System.out.println(newDirs);
+//		System.out.println(newDirs);
 		return lastDirs;
 	}
 
