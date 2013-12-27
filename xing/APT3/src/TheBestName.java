@@ -33,4 +33,34 @@ public class TheBestName {
 		
 		return names;
 	}
+	
+	public static void main(String[] args) {
+		TheBestName run = new TheBestName();
+		String[] names1 = {"JOHN", "PETR", "ACRUSH"};
+		System.out.println(Arrays.toString(run.sort(names1)));
+		// Returns: {"JOHN", "ACRUSH", "PETR" }
+		String[] names2 = {"GLUK", "MARGARITKA"};
+		System.out.println(Arrays.toString(run.sort(names2)));
+		// Returns: {"MARGARITKA", "GLUK" }
+		String[] names3 = {"JOHN", "A", "AA", "AAA", "JOHN", "B", "BB", "BBB", 
+				"JOHN", "C", "CC", "CCC", "JOHN"};
+		System.out.println(Arrays.toString(run.sort(names3)));
+//		Returns: 
+//		{"JOHN",
+//		"JOHN",
+//		"JOHN",
+//		"JOHN",
+//		"CCC",
+//		"BBB",
+//		"CC",
+//		"BB",
+//		"AAA",
+//		"C",
+//		"AA",
+//		"B",
+//		"A" }
+		String[] names4 = {"BATMAN", "SUPERMAN", "SPIDERMAN", "TERMINATOR"};
+		System.out.println(Arrays.toString(run.sort(names4)));
+		// Returns: {"TERMINATOR", "SUPERMAN", "SPIDERMAN", "BATMAN" }
+		}
 }

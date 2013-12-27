@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class TheBestName {
+public class TheBestNameV1 {
 
 	public static int weigh(String name) {
 		Map<Character, Integer> alphabet = new HashMap<Character, Integer>();
