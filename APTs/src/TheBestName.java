@@ -7,6 +7,7 @@ public class TheBestName {
 			public int compare(String name, String otherName) {
 				int nameWeight = 0;
 				int otherNameWeight = 0;
+				
 				for (int i = 0; i < name.length(); i++) {
 					nameWeight += (int) name.charAt(i) - 64;
 				}
@@ -15,10 +16,10 @@ public class TheBestName {
 				}
 
 				if (name.equals("JOHN")) {
-					nameWeight = 26 * 50 + 1;
+					nameWeight = 26 * 100 + 1;
 				}
 				if (otherName.equals("JOHN")) {
-					otherNameWeight = 26 * 50 + 1;
+					otherNameWeight = 26 * 100 + 1;
 				}
 
 				if (nameWeight < otherNameWeight) {
@@ -60,6 +61,7 @@ public class TheBestName {
 //		"A" }
 		String[] names4 = {"BATMAN", "SUPERMAN", "SPIDERMAN", "TERMINATOR"};
 		System.out.println(Arrays.toString(run.sort(names4)));
-		// Returns: {"TERMINATOR", "SUPERMAN", "SPIDERMAN", "BATMAN" }
+		// Returns: {"TERMINATOR", "SUPERMAN", "SPIDERMAN", "BATMAN"}
+		System.out.println((int) 'A');
 		}
 }
