@@ -12,18 +12,46 @@ public class MedalTable {
 				String country = countries[i];
 				if (!map.containsKey(country)) {
 					// start a blank scoreboard for the country
-					int[] score = {0, 0, 0};
-					score[i] = 1;
-					map.put(medals[i], score);
+					int[] tally = {0, 0, 0};
+					tally[i] = 1;
+					map.put(country, tally);
 				}
 				else {
 					// get the existing scoreboard for the country
-					int[] score = map.get(medals[i]);
-					score[i] = score[i] + 1;
-					map.put(medals[i], value)
+					int[] tally = map.get(country);
+					tally[i] = tally[i] + 1;
+					map.put(country, tally);
 				}
 			}
 		}
+		
+		String[] table = map.keySet().toArray(new String[map.keySet().size()]);
+		
+		for (int i = 0; i < table.length; i++) {
+			String nation = Arrays.toString(map.get(table[i]));
+			table[i] = table[i] + " "
+					+ nation.substring(1, nation.length() - 1).replaceAll(",", "");
+		}
+		
+		Arrays.sort(table, new Comparator<String>() {
+			public int compare(String s1, String s2) {
+				String[] nation1 = s1.split(" ");
+				String[] nation2 = s2.split(" ");
+				if (!nation1[1].equals(nation2[1])) {
+					return -1*Integer.valueOf(nation1[1]).compareTo(Integer.valueOf(nation2[1]));
+				}
+				else if (!nation1[2].equals(nation2[2])) {
+					return -1*Integer.valueOf(nation1[2]).compareTo(Integer.valueOf(nation2[2]));
+				}
+				else if (!nation1[3].equals(nation2[3])) {
+					return -1*Integer.valueOf(nation1[3]).compareTo(Integer.valueOf(nation2[3]));
+				}
+				else {
+					return s1.substring(0, 4).compareTo(s2.substring(0, 4));
+				}
+			}
+		});
+		return table;
 	}
 
 	public static void main(String[] args) {
