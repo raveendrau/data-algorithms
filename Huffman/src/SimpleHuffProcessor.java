@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 public class SimpleHuffProcessor implements IHuffProcessor {
     
@@ -163,20 +164,64 @@ public class SimpleHuffProcessor implements IHuffProcessor {
 			}
 		}
         
-        /**
-         * First create one node per character, weighted with the number of 
-         * times the character occurs, and insert each node into a priority 
-         * queue. Then choose two minimal nodes, join these nodes together 
-         * as children of a newly created node, and insert the newly created 
-         * node into the priority queue (see notes from class). 
-         * The new node is weighted with the sum of the two minimal nodes 
-         * taken from the priority queue. Continue this process until 
-         * only one node is left in the priority queue. 
-         * This is the root of the Huffman tree.
-         */
-        
+       PriorityQueue<TreeNode> q = new  PriorityQueue<TreeNode>(woods.values());
+       TreeNode eof = new TreeNode(PSEUDO_EOF, 1);
+       q.add(eof);
+       root = growTree(q);
+       
+       /**
+        * Create a table or map of 8-bit chunks (represented as an int value) 
+        * to Huffman-codings. The map of chunk-codings is formed by traversing 
+        * the path from the root of the Huffman tree to each leaf. Each 
+        * root-to-leaf path creates a chunk-coding for the value stored 
+        * in the leaf. When going left in the tree append a zero to the path; 
+        * when going right append a one. The map has the 8-bit int chunks as 
+        * keys and the corresponding Huffman/chunk-coding String as the value 
+        * associated with the key.
+        */
+       map = new HashMap<Integer, String>();
+       getPath(root, "");
+       
+       return bRead; 
     }
 
+    /**
+     * First create one node per character, weighted with the number of 
+     * times the character occurs, and insert each node into a priority 
+     * queue. Then choose two minimal nodes, join these nodes together 
+     * as children of a newly created node, and insert the newly created 
+     * node into the priority queue (see notes from class). 
+     * The new node is weighted with the sum of the two minimal nodes 
+     * taken from the priority queue. Continue this process until 
+     * only one node is left in the priority queue. 
+     * This is the root of the Huffman tree.
+     */
+    public TreeNode growTree(PriorityQueue<TreeNode> q) {
+    	TreeNode t;
+    	if (q.size() == 1) {
+			t = q.poll();
+		}
+    	else {
+			TreeNode treeBoy = q.poll();
+			TreeNode treeGirl = q.poll();
+			TreeNode treeBaby = new TreeNode(treeBoy.myValue*1000, 
+					treeBoy.weight+treeGirl.weight, treeBoy, treeGirl);
+			q.add(treeBaby);
+			t = growTree(q);
+		}
+    	return t;
+    }
+    
+    public void getPath(TreeNode t, String s) {
+    	if (t.isLeaf()) {
+			map.put(t.myValue, s);
+		}
+    	else {
+			getPath(t.myLeft,s+"0");
+			getPath(t.myRight,s+"0");
+		}
+    }
+    
     public void setViewer(HuffViewer viewer) {
         myViewer = viewer;
     }
