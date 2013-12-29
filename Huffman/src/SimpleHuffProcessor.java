@@ -3,6 +3,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SimpleHuffProcessor implements IHuffProcessor {
     
@@ -16,8 +17,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
     public int compress(InputStream in, OutputStream out, boolean force) throws IOException {
 //        throw new IOException("compress is not implemented");
         
-        // Initialize number of bits written
-    	bWrote = 0;
+    	bWrote = 0; /* Initialize number of bits written */
     	
     	/**
     	 * Write a magic number at the beginning of the compressed file. 
@@ -111,9 +111,70 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         return bWrote;
     }
 
+    
+    /**
+     * To compress a file, count how many times every bit-sequence occurs 
+     * in a file. These counts are used to build weighted nodes that will be 
+     * leaves in the Huffman tree. Although this writeup sometimes refers to 
+     * "characters", you should use int variables/valuse in your code 
+     * rather than char. Note that the method for reading bits-at-a-time 
+     * from a BitInputStream returns an int, so using int variables makes 
+     * sense (this might be different in the Burrows-Wheeler code you write.) 
+     * Any wording in this write-up that uses the word character means an 8-bit 
+     * chunk and this chunk-size could (in theory) change. Do not use any 
+     * variables of type byte in your program. Use only int variables, or 
+     * perhaps char variables if you implement the Burrows-Wheeler project.
+     */
     public int preprocessCompress(InputStream in) throws IOException {
-        throw new IOException("preprocess not implemented");
-        //return 0;
+//        throw new IOException("preprocess not implemented");
+    	Map<Integer, TreeNode> woods = new HashMap<Integer, TreeNode>();
+    	bWrote = 0; /* Initialize number of bits written */
+        BitInputStream bis = new BitInputStream(in);
+        // Return the next byte in the stream as an int, bit
+        int bit = bis.read();
+        
+        while(bit != -1) {
+        	bRead += 8;
+        	// if a node of the bit already exists
+        	if (!woods.containsKey(bit)) {
+				TreeNode node = new TreeNode(bit, 1);
+				woods.put(bit, node);
+			}
+        	// if a node of this bit does not exist
+        	else {
+				TreeNode node = woods.get(bit);
+				node.myWeight++;
+				woods.put(bit, node);
+			}
+        	bit = bis.read();
+        }
+        bis.close();
+        
+        /**
+         * From these counts build the Huffman tree. First create one 
+         * node per character, weighted with the number of times the character 
+         * occurs, and insert each node into a priority queue. 
+         */
+        for (TreeNode tree: woods.values()) {
+			int character = tree.myValue;
+			int weight = tree.myWeight;
+			if (character > 0) {
+				ct[character] = weight;
+			}
+		}
+        
+        /**
+         * First create one node per character, weighted with the number of 
+         * times the character occurs, and insert each node into a priority 
+         * queue. Then choose two minimal nodes, join these nodes together 
+         * as children of a newly created node, and insert the newly created 
+         * node into the priority queue (see notes from class). 
+         * The new node is weighted with the sum of the two minimal nodes 
+         * taken from the priority queue. Continue this process until 
+         * only one node is left in the priority queue. 
+         * This is the root of the Huffman tree.
+         */
+        
     }
 
     public void setViewer(HuffViewer viewer) {
@@ -129,4 +190,31 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         myViewer.update(s);
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
