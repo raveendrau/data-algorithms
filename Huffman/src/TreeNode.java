@@ -56,4 +56,11 @@ public class TreeNode implements Comparable<TreeNode> {
 
         return myWeight - rhs.myWeight;
     }
+    
+    public boolean isLeaf() {
+    	if (myValue == IHuffProcessor.PSEUDO_EOF) {
+			return true;
+		}
+    	return myLeft == null && myRight == null;
+    }
 }
