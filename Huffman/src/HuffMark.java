@@ -44,7 +44,7 @@ public class HuffMark {
     
     public void doMark() throws IOException{
         if (myHuffer == null){
-            myHuffer = new NoHuffProcessor();
+            myHuffer = new SimpleHuffProcessor();
         }
         int action = ourOpenChooser.showOpenDialog(null);
         if (action == JFileChooser.APPROVE_OPTION){

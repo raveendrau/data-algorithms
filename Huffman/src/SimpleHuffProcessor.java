@@ -7,19 +7,18 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class SimpleHuffProcessor implements IHuffProcessor {
-   
+    
+	private int bRead;
+	private int bWrote;
     private HuffViewer myViewer;
     private TreeNode root;
-    private HashMap <Integer, String> map = new HashMap<Integer, String>();
-    private int[] counts;
+    private HashMap <Integer, String> map;
+    private int[] ct = new int[256];
     
-    public int compress(InputStream in, OutputStream out, boolean force) 
-    		throws IOException {
+    public int compress(InputStream in, OutputStream out, boolean force) throws IOException {
 //        throw new IOException("compress is not implemented");
-       String path;
-       int bits;
-       int in = 0; /* Update count bits written and read */
-       int out = 0; /* Update count bits written and read *
+        
+    	bWrote = 0; /* Initialize number of bits written */
     	
     	/**
     	 * Write a magic number at the beginning of the compressed file. 
@@ -36,6 +35,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
     	 */
     	BitOutputStream bos = new BitOutputStream(out);
     	bos.writeBits(BITS_PER_INT, MAGIC_NUMBER);
+    	bWrote += BITS_PER_INT; /* Update bits written count */
     	
     	/**
     	 * Write information after the magic number that allows the 

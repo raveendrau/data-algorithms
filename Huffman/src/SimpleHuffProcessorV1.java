@@ -6,19 +6,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-public class NoHuffProcessor implements IHuffProcessor {
-    
-	private int bRead;
-	private int bWrote;
+import com.sun.corba.se.spi.orbutil.fsm.Input;
+
+public class SimpleHuffProcessorV1 implements IHuffProcessor {
+   
     private HuffViewer myViewer;
-    private TreeNode root;
-    private HashMap <Integer, String> map;
-    private int[] ct = new int[256];
+    private TreeNode myRoot;
+    private HashMap <Integer, String> myMap = new HashMap<Integer, String>();
+    private int[] myCounts;
     
-    public int compress(InputStream in, OutputStream out, boolean force) throws IOException {
+    public int compress(InputStream in, OutputStream out, boolean force) 
+    		throws IOException {
 //        throw new IOException("compress is not implemented");
-        
-    	bWrote = 0; /* Initialize number of bits written */
+       String path;
+       int bits;
+       int myIn = 0; /* Update count bits written and read */
+       int myOut = 0; /* Update count bits written and read *
     	
     	/**
     	 * Write a magic number at the beginning of the compressed file. 
@@ -35,7 +38,6 @@ public class NoHuffProcessor implements IHuffProcessor {
     	 */
     	BitOutputStream bos = new BitOutputStream(out);
     	bos.writeBits(BITS_PER_INT, MAGIC_NUMBER);
-    	bWrote += BITS_PER_INT; /* Update bits written count */
     	
     	/**
     	 * Write information after the magic number that allows the 
@@ -47,8 +49,7 @@ public class NoHuffProcessor implements IHuffProcessor {
     	 * You don't need a count for pseudo-EOF because it's one.
     	 */
         for (int i = 0; i < ALPH_SIZE; i++) {
-			bos.writeBits(BITS_PER_INT, ct[i]);
-			bWrote += BITS_PER_INT; /* Update bits written count */
+			bos.writeBits(BITS_PER_INT, myCounts[i]);
 		}
         
         /**
@@ -62,24 +63,16 @@ public class NoHuffProcessor implements IHuffProcessor {
          */
         BitInputStream bis = new BitInputStream(in);
         // Return the next byte in the stream as an int, bit
-        int bit = bis.read();
+        
         
         // If there is an incoming byte
-        while (bit > 0) {
+        while ((bits = bis.readBits(IHuffConstants.BITS_PER_WORD)) != 1) {
+        	myIn = IHuffConstants.BITS_PER_WORD;
 			// Get the corresponding encoding from map
-        	String code = map.get(bit);
+        	path = myMap.get(bits);
+        	myOut = path.length();
         	// Let's write the encoding for this byte
-        	for (int i = 0; i < code.length(); i++) {
-        		char c = code.charAt(i);
-        		if (c == '0') {
-					bos.writeBits(1, 0);
-				}
-        		else if (c == '1') {
-					bos.writeBits(1, 1);
-				}
-        		bWrote += BITS_PER_INT; /* Update bits written count */
-			}
-			bit = bis.read(); // read the next byte
+        	bos.writeBits(path.length(), getInt(path));
 		}
         bis.close();
         
@@ -92,7 +85,11 @@ public class NoHuffProcessor implements IHuffProcessor {
          * is read. The pseudocode below shows how to read a compressed file 
          * using the pseudo-EOF technique.
          */
-        bos.writeBits(BITS_PER_INT, PSEUDO_EOF);
+        path = myMap.get(PSEUDO_EOF);
+        bos.writeBits(path.length(), getInt(path));
+        myOut += path.length();
+        
+        bis.close();
         bos.close();
         
         /**
@@ -102,16 +99,28 @@ public class NoHuffProcessor implements IHuffProcessor {
          * that this is the case. 
          * Here's a screen shot from what happens in my program.
          */
-        if ((bWrote > bRead) && !force) {
-        	int bDiff = bWrote - bRead;
-        	String bDiffStr = Integer.toString(bDiff);
-			String message = "Compression used "+bDiffStr+" more bits\n"
+        if ((myOut > myIn) && !force) {
+        	int myDiff = myOut - myIn;
+        	String DiffStr = Integer.toString(myDiff);
+			String message = "Compression used "+DiffStr+" more bits\n"
 								+ "I suggest force compression!";
-			throw new IOException(message);
+			myViewer.showError(message);
 		}
-        return bWrote;
+        return myOut;
     }
 
+    /**
+     * Get the integer representation of a string
+     * @param s
+     * @return integer equivalent
+     */
+    public int getInt(String str) {
+    	int ret = 0;
+    	for (int i = 0; i < str.length(); i++) {
+			ret = (ret << 1) + (str.charAt(i) == '1' ? 1 : 0);
+		}
+    	return ret;
+    }
     
     /**
      * To compress a file, count how many times every bit-sequence occurs 
@@ -128,46 +137,36 @@ public class NoHuffProcessor implements IHuffProcessor {
      */
     public int preprocessCompress(InputStream in) throws IOException {
 //        throw new IOException("preprocess not implemented");
-    	Map<Integer, TreeNode> woods = new HashMap<Integer, TreeNode>();
-    	bWrote = 0; /* Initialize number of bits written */
+    	myCounts = new int[ALPH_SIZE];
+    	int bits;
         BitInputStream bis = new BitInputStream(in);
         // Return the next byte in the stream as an int, bit
-        int bit = bis.read();
         
-        while(bit != -1) {
-        	bRead += 8;
-        	// if a node of the bit already exists
-        	if (!woods.containsKey(bit)) {
-				TreeNode node = new TreeNode(bit, 1);
-				woods.put(bit, node);
-			}
-        	// if a node of this bit does not exist
-        	else {
-				TreeNode node = woods.get(bit);
-				node.myWeight++;
-				woods.put(bit, node);
-			}
-        	bit = bis.read();
+        while((bits = bis.readBits(IHuffConstants.BITS_PER_WORD)) != -1) {
+        	myCounts[bits] += 1;
         }
-        bis.close();
+ 
         
         /**
          * From these counts build the Huffman tree. First create one 
          * node per character, weighted with the number of times the character 
          * occurs, and insert each node into a priority queue. 
          */
-        for (TreeNode tree: woods.values()) {
-			int character = tree.myValue;
-			int weight = tree.myWeight;
-			if (character > 0) {
-				ct[character] = weight;
-			}
-		}
-        
-       PriorityQueue<TreeNode> q = new  PriorityQueue<TreeNode>(woods.values());
+        PriorityQueue<TreeNode> q = new  PriorityQueue<TreeNode>();
+        for (int i = 0; i < myCounts.length; i++) {
+			q.add(new TreeNode(i, myCounts[i]));
+        }        
        TreeNode eof = new TreeNode(PSEUDO_EOF, 1);
        q.add(eof);
-       root = growTree(q);
+       
+       int size = q.size();
+       while (size > 1){
+    	   TreeNode boyTree = q.remove();
+    	   TreeNode girlTree = q.remove();
+    	   int newWeight = boyTree.myWeight + girlTree.myWeight;
+    	   q.add(new TreeNode(0, newWeight, boyTree, girlTree));		
+       }
+       bis.close();
        
        /**
         * Create a table or map of 8-bit chunks (represented as an int value) 
@@ -179,10 +178,10 @@ public class NoHuffProcessor implements IHuffProcessor {
         * keys and the corresponding Huffman/chunk-coding String as the value 
         * associated with the key.
         */
-       map = new HashMap<Integer, String>();
-       getPath(root, "");
+       myRoot = q.remove();
+       getPath(myRoot, "");
        
-       return bRead; 
+       return size; 
     }
 
     /**
@@ -214,7 +213,7 @@ public class NoHuffProcessor implements IHuffProcessor {
     
     public void getPath(TreeNode t, String s) {
     	if (t.isLeaf()) {
-			map.put(t.myValue, s);
+			myMap.put(t.myValue, s);
 		}
     	else {
 			getPath(t.myLeft,s+"0");
@@ -227,7 +226,7 @@ public class NoHuffProcessor implements IHuffProcessor {
     }
 
     public int uncompress(InputStream in, OutputStream out) throws IOException {
-        int bWrote = 0;
+        int bits;
         BitInputStream bis = new BitInputStream(in);
         BitOutputStream bos = new BitOutputStream(out);
         
@@ -247,11 +246,10 @@ public class NoHuffProcessor implements IHuffProcessor {
          * Your code should at least print a message, and ideally generate 
          * an error dialog as shown.
          */
-        int magic = bis.readBits(BITS_PER_INT);
-        if (magic != MAGIC_NUMBER) {
-        	bis.close();
-        	bos.close();
-        	throw new IOException("magic number not right");
+        bits = bis.readBits(BITS_PER_INT);
+        if (bits != MAGIC_NUMBER) {
+        	myViewer.showError("magic number not right");
+        	return -1;
 		}
         
         /**
@@ -263,20 +261,11 @@ public class NoHuffProcessor implements IHuffProcessor {
          * 8-bit chunk, in order from 0-255. You don't need a count for 
          * pseudo-EOF because it's one.
          */
-        Map<Integer, TreeNode> woods = new HashMap<Integer, TreeNode>();
+        myCounts = new int[ALPH_SIZE];
         for (int i = 0; i < ALPH_SIZE; i++) {
-			int bit = bis.readBits(BITS_PER_INT);
-			if (bit > 0) {
-				TreeNode n = new TreeNode(i, bit);
-				woods.put(i,n);
-			}
+			bits = bis.readBits(BITS_PER_INT);
+			myCounts[i] = bits;
 		}
-        
-        PriorityQueue<TreeNode> q = new PriorityQueue<TreeNode>(woods.values());
-        TreeNode eof = new TreeNode(PSEUDO_EOF, 1);
-        q.add(eof);
-        root = growTree(q);
-        TreeNode n = root;
         
         /**
          * Write the bits needed to encode each character of the input file. 
@@ -286,39 +275,33 @@ public class NoHuffProcessor implements IHuffProcessor {
          * file being compressed, look up each chunk/character's encoding and 
          * print a 0 or 1 bit for each '0' or '1' character in the encoding.
          */
-        int nextBit;
-        int iterCt = 1;
+        TreeNode node = myRoot;
+        int count = 0;
         
-        while (iterCt < root.myWeight) {
-			nextBit = bis.readBits(1);
-			if (nextBit == -1) {
-				System.out.println("Error! Unable to read bits");
-				break;
-			}
+		while ((bits = bis.readBits(1)) != -1) {
+			if ((bits & 1) == 0) {
+				node = node.myLeft;
+				count++;
+			} 
 			else {
-				if (!((nextBit & 1) == 0)) {
-					n = n.myLeft;
-				}
+				node = node.myRight;
+				count++;
+			}
+			if (node.myLeft == null && node.myRight == null) {
+				if (node.myValue == IHuffConstants.PSEUDO_EOF) {
+					break; 
+				} 
 				else {
-					n = n.myRight;
-				}
-				if (n.isLeaf()) {
-					if (n.myValue == PSEUDO_EOF) {
-						break;
-					}
-					else {
-						bos.writeBits(8, n.myValue);
-						bWrote += 8;
-						iterCt++;
-						n = root;
-					}
+					bos.write(node.myValue);
+					count += 1;
+					node = myRoot;
 				}
 			}
 		}
         
         bis.close();
         bos.close();
-        return bWrote;
+        return count;
     }
     
     private void showString(String s){
@@ -351,5 +334,5 @@ public class NoHuffProcessor implements IHuffProcessor {
     
     
     
-    
 }
+    
