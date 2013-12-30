@@ -10,7 +10,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
     
 	private int bRead;
 	private int bWrote;
-    private HuffViewer view;
+    private HuffViewer myViewer;
     private TreeNode root;
     private HashMap <Integer, String> map;
     private int[] ct = new int[256];
@@ -205,7 +205,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
 			TreeNode treeBoy = q.poll();
 			TreeNode treeGirl = q.poll();
 			TreeNode treeBaby = new TreeNode(treeBoy.myValue*1000, 
-					treeBoy.weight+treeGirl.weight, treeBoy, treeGirl);
+					treeBoy.myWeight+treeGirl.myWeight, treeBoy, treeGirl);
 			q.add(treeBaby);
 			t = growTree(q);
 		}
@@ -227,8 +227,98 @@ public class SimpleHuffProcessor implements IHuffProcessor {
     }
 
     public int uncompress(InputStream in, OutputStream out) throws IOException {
-        throw new IOException("uncompress not implemented");
-        //return 0;
+        int bWrote = 0;
+        BitInputStream bis = new BitInputStream(in);
+        BitOutputStream bos = new BitOutputStream(out);
+        
+        /**
+         * When you uncompress you'll read this number to ensure you're 
+         * reading a file your program compressed. Your program should be 
+         * able to uncompress files it creates. For extra credit you should be 
+         * able to process standard headers, specified by magic numbers 
+         * STORE_COUNTS and STORE_TREE in the IHuffConstants interface. 
+         * There's also a value for custom headers.
+         * 
+         * In general, a file with the wrong magic number should not 
+         * generate an error, but should notify the user. For example, 
+         * in my program the exception above ultimately causes the user 
+         * to see what's shown below. This is because the exception is caught 
+         * and the viewer's showError method called appropriately. 
+         * Your code should at least print a message, and ideally generate 
+         * an error dialog as shown.
+         */
+        int magic = bis.readBits(BITS_PER_INT);
+        if (magic != MAGIC_NUMBER) {
+        	throw new IOException("magic number not right");
+        	bis.close();
+        	bos.close();
+		}
+        
+        /**
+         * Write information after the magic number that allows the Huffman 
+         * tree to be recreated. The simplest thing to do here is write 
+         * ALPH_SIZE counts as int values, but you can also write the tree. 
+         * Writing the counts will create a header in standard count format or 
+         * SCF. This is a header of 255 counts, one 32-bit int value for each 
+         * 8-bit chunk, in order from 0-255. You don't need a count for 
+         * pseudo-EOF because it's one.
+         */
+        Map<Integer, TreeNode> woods = new HashMap<Integer, TreeNode>();
+        for (int i = 0; i < ALPH_SIZE; i++) {
+			int bit = bis.readBits(BITS_PER_INT);
+			if (bit > 0) {
+				TreeNode n = new TreeNode(i, bit);
+				woods.put(i,n);
+			}
+		}
+        
+        PriorityQueue<TreeNode> q = new PriorityQueue<TreeNode>(woods.values());
+        TreeNode eof = new TreeNode(PSEUDO_EOF, 1);
+        q.add(eof);
+        root = growTree(q);
+        TreeNode n = root;
+        
+        /**
+         * Write the bits needed to encode each character of the input file. 
+         * For example, if the coding for 'a' is "01011" then your code will 
+         * have to write 5 bits, in the order 0, 1, 0, 1, 1 every time the 
+         * program is compressing/encoding the chunk 'a'. You'll re-read the 
+         * file being compressed, look up each chunk/character's encoding and 
+         * print a 0 or 1 bit for each '0' or '1' character in the encoding.
+         */
+        int nextBit;
+        int iterCt = 1;
+        
+        while (iterCt < root.myWeight) {
+			nextBit = bis.readBits(1);
+			if (nextBit == -1) {
+				System.out.println("Error! Unable to read bits");
+				break;
+			}
+			else {
+				if (!((nextBit & 1) == 0)) {
+					n = n.myLeft;
+				}
+				else {
+					n = n.myRight;
+				}
+				if (n.isLeaf()) {
+					if (n.myValue == PSEUDO_EOF) {
+						break;
+					}
+					else {
+						bos.writeBits(8, n.myValue);
+						bWrote += 8;
+						iterCt++;
+						n = root;
+					}
+				}
+			}
+		}
+        
+        bis.close();
+        bos.close();
+        return bWrote;
     }
     
     private void showString(String s){
