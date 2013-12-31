@@ -1,8 +1,10 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class WordLadder {
+
+
+
+public class WordLadderV2 {
 
 	/**
 	 * In this problem you'll write a method that has parameters representing 
@@ -17,28 +19,24 @@ public class WordLadder {
 	 * otherwise it should return "none".
 	 */
 	public String ladderExists(String[] words, String from, String to) {
-		return helper(words, from, to, true);
-	}	
-	
-	public String helper(String[] words, String from, String to, boolean first) {
-		if (from.equals(to) || 
-				(!first && linked(from, to))) {
+		if (words.length == 0 && linked(from, to)) {
 			return "ladder";
 		}
-		if (words.length == 0) {
-			return "none";
-		}
-		List<String> list = new ArrayList<String>(Arrays.asList(words));
+		List<String> list = new ArrayList<String>();
 		for (String word : words) {
 			if (linked(from, word)) {
-				list.remove(word);
-				String[] array = new String[list.size()];
-				for (int i = 0; i < list.size(); i++) {
-					array[i] = list.get(i);
+				list.add(word);
+			}
+			List<String> newList = new ArrayList<String>();
+			for (String newWord : words) {
+				if (!newWord.equals(word)) {
+					newList.add(newWord);
 				}
-				if (helper(array, word, to, false).equals("ladder")) {
-					return "ladder";
-				}
+			}
+			String[] newWords = newList.toArray(new String[newList.size()]);
+			String res = ladderExists(newWords, word, to);
+			if (res.equals("ladder")) {
+				return res;
 			}
 		}
 		return "none";
@@ -72,7 +70,7 @@ public class WordLadder {
 	}
 
 	public static void main(String[] args) {
-		WordLadder r = new WordLadder();
+		WordLadderV2 r = new WordLadderV2();
 		String[] words1 = {"hot", "dot", "dog"};
 		String from1 = "hit";
 		String to1 = "cog";

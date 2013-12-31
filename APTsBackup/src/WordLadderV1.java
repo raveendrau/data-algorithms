@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 
 
-public class WordLadder {
+public class WordLadderV1 {
 
 	/**
 	 * In this problem you'll write a method that has parameters representing 
@@ -99,7 +99,7 @@ public class WordLadder {
 	}
 
 	public static void main(String[] args) {
-		WordLadder r = new WordLadder();
+		WordLadderV1 r = new WordLadderV1();
 		String[] words1 = {"hot", "dot", "dog"};
 		String from1 = "hit";
 		String to1 = "cog";
