@@ -38,10 +38,11 @@ public class QBalance {
 		else {
 			
 		}
+		return symbols.length();
 	}
 	
 	public int add(String right, String symbols) {
-		
+		return 0;
 	}
 	
 	public boolean unbalanced(String left, String right, String symbols) {
