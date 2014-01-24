@@ -1,52 +1,53 @@
+public class RatRoute {
 
-public class RatRoute { 
-	
-	
-	
-	public static int numRoutes(String[] enc) {
-		return 0;
-	}
-	
 
-	public static void main(String[] args) {
-		String[] enc0 = {
-				".R...",
-				"..X..",
-				"....X",
-				"X.X.X",
-				"...C."};
-		System.out.println(numRoutes(enc0)); // Returns 3
-		String[] enc1 = {
-				"...X.C",
-		"R....."};
-		System.out.println(numRoutes(enc1)); // Returns 2
-		String[] enc2 = {
-				"C..X.",
-				".....",
-				"X..R.",
-				"....."};
-		System.out.println(numRoutes(enc2)); // Returns 8
-		String[] enc3 = {
-				"C........R",
-		".........."};
-		System.out.println(numRoutes(enc3)); // Returns 1
-		String[] enc4 = { "C",
-				".",
-				".",
-				".",
-				".",
-				".",
-				".",
-				"X",
-				".",
-				"R"};
-		System.out.println(numRoutes(enc4)); // Returns 0
-		String[] enc5 = { 
-				"....X",
-				".CXX.",
-				".XX..",
-				"....R"};
-		System.out.println(numRoutes(enc5)); // Returns 0
+	private char[][] myGrid;
+	private int myRows, myCols;
+	private int myCheeseRow, myCheeseCol;
+
+	public int numRoutes(String[] enc) {
+
+		myRows = enc.length;
+		myCols = enc[0].length();
+		myGrid = new char[myRows][myCols]; // initialize instance vars
+
+		int ratRow = 0, ratCol = 0;
+		for (int r = 0; r < myRows; r++) {
+			for (int c = 0; c < myCols; c++) {
+				char ch = enc[r].charAt(c);
+				if (ch == 'R') {
+					ratRow = r;
+					ratCol = c;
+				} else if (ch == 'C') {
+					myCheeseRow = r;
+					myCheeseCol = c;
+					myGrid[r][c] = 'C';
+				} else if (ch == 'X') {
+					myGrid[r][c] = 'X';
+				} else if (ch == '.') {
+					myGrid[r][c] = '.';
+				}
+			}
+		}
+
+		int currentDistance = cheeseDistance(ratRow, ratCol);
+		return routeCount(ratRow, ratCol, currentDistance + 1);
 	}
 
+	private int cheeseDistance(int row, int col) {
+		return Math.abs(row - myCheeseRow) + Math.abs(col - myCheeseCol);
+	}
+
+	private int routeCount(int row, int col, int lastDistance) {
+
+		if (row < 0 || col < 0 || row >= myRows || col >= myCols) return 0;
+		if (myGrid[row][col] == 'C') return 1;
+		if (myGrid[row][col] == 'X') return 0;
+		if (cheeseDistance(row, col)>lastDistance) return 0;
+		return routeCount(row - 1, col, cheeseDistance(row, col))
+				+ routeCount(row + 1, col, cheeseDistance(row, col))
+				+ routeCount(row, col - 1, cheeseDistance(row, col))
+				+ routeCount(row, col + 1, cheeseDistance(row, col));
+		
+	}
 }
